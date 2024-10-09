@@ -15,3 +15,4 @@ def criar_conexao():
         print(f"Erro ao conectar com o banco de dados: {e}")
         return None
     
+criar_conexao()

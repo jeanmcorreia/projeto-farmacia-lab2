@@ -14,5 +14,3 @@ def criar_conexao():
     except Exception as e:
         print(f"Erro ao conectar com o banco de dados: {e}")
         return None
-    
-criar_conexao()

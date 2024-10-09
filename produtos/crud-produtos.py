@@ -24,3 +24,17 @@ def criar_produtos(nome, preco, categoria, tarja):
     finally:
             cursor.close()
             conexao.close()
+
+def relatorio_produtos():
+    try:
+        conexao = criar_conexao()
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM produtos')
+        
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(f"Erro ao acessar o banco de dados: {error}")
+        return False 
+
+    finally:
+            cursor.close()
+            conexao.close()

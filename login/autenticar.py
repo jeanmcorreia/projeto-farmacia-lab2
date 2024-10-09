@@ -1,28 +1,36 @@
-def autenticar(login, senha):
-    usuarios = [
-        {
-            "username": "teste",
-            "password": "admin"
-        },
-        {
-            "username": "teste2",
-            "password": "admin2"
-        },
-        {
-            "username": "teste3",
-            "password": "admin3"
-        },
-        {
-            "username": "teste4",
-            "password": "admin4"
-        }
-    ]
-    for usuario in usuarios:
-        if usuario["username"] == login and usuario["password"] == senha:
-            return True
-    
-    return False
+from config.db import criar_conexao
+import psycopg2  
 
-user = "teste"
-pw = "admin"
-autenticar(user, pw)
+def autenticar(login, senha):
+    try:
+       
+        conexao = criar_conexao()
+        cursor = conexao.cursor()
+        cursor.execute("SELECT usuario, password FROM \"Projeto\".usuario")  
+
+        
+        for row in cursor.fetchall():
+            usuario, password = row
+            if usuario == login and password == senha:
+                return True  
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(f"Erro ao acessar o banco de dados: {error}")
+
+    finally:
+        
+        try:
+            cursor.close()  
+        except:
+            pass  
+
+        try:
+            conexao.close()  
+        except:
+            pass  
+
+    return False  
+          
+            
+    
+   

@@ -1,11 +1,11 @@
 import psycopg2
 from config.db import criar_conexao
 
-def criar_produtos(nome, preco, categoria, tarja):
+def criar_produtos(nome, preco, categoria, tarja): #CREATE
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM produtos WHERE nome = %s' (nome,))
+        cursor.execute('SELECT * FROM produtos WHERE nome = %s', (nome,))
         produto_existente = cursor.fetchone()
 
         if produto_existente:
@@ -25,11 +25,13 @@ def criar_produtos(nome, preco, categoria, tarja):
             cursor.close()
             conexao.close()
 
-def relatorio_produtos():
+def relatorio_produtos(): #READ
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM produtos')
+        relatorio = cursor.fetchall()
+        return relatorio
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -38,3 +40,22 @@ def relatorio_produtos():
     finally:
             cursor.close()
             conexao.close()
+
+def atualizar_produto(idProduto, novo_nome, novo_preco, nova_categoria, nova_tarja): #UPDATE
+    try:
+        conexao = criar_conexao()
+        cursor = conexao.cursor()
+        cursor.execute('UPDATE produtos SET nome = %s, preco = %s, categoria = %s, tarja = %s WHERE id = %s', (novo_nome, novo_preco, nova_categoria, nova_tarja, idProduto))
+        conexao.commit()
+        print(f"Produto {idProduto} atualizado com sucesso!")
+        return True
+    
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(f"Erro ao acessar o banco de dados: {error}")
+        return False 
+
+    finally:
+            cursor.close()
+            conexao.close()
+
+##def excluir_produto

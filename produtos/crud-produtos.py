@@ -58,4 +58,25 @@ def atualizar_produto(idProduto, novo_nome, novo_preco, nova_categoria, nova_tar
             cursor.close()
             conexao.close()
 
-##def excluir_produto
+def excluir_produto(idProduto): #DELETE
+    try:
+        conexao = criar_conexao()
+        cursor = conexao.cursor()
+        confirmar_exclusao = input(f"Você tem certeza que quer excluir o produto {idProduto}? (Isso excluirá o produto permanentemente!)\nS/N").upper()
+
+        if confirmar_exclusao == "S":
+            cursor.execute('DELETE FROM produtos WHERE id = %s', (idProduto,))
+            conexao.commit()
+            print(f"Produto {idProduto} excluído.")
+            return True
+        else:
+            print("Exclusão cancelada.")
+            return False
+        
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(f"Erro ao acessar o banco de dados: {error}")
+        return False 
+
+    finally:
+        cursor.close()
+        conexao.close()

@@ -44,11 +44,11 @@ def editar_funcionario(id, nome, cpf, endereco, celular, data_admissao):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".funcionario where id = %s", id)
+        cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", id)
         func_existe = cursor.fetchone()
         
         if func_existe:
-            cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, admissao = %s WHERE id = %s", nome, cpf, endereco, celular, data_admissao, id)
+            cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, admissao = %s WHERE idFuncionario = %s", nome, cpf, endereco, celular, data_admissao, id)
             conexao.commit()
             print(f"Funcionário com ID {id} atualizado com sucesso.")
             return True

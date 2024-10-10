@@ -2,20 +2,14 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def criar_cliente(nome, cpf, endereco, celular, dataCadastro):
+def gerar_estoque(idProduto, quantidade, validade):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("Select cpf from \"Projeto\".cliente")
-        cliente_existe = cursor.fetchone()
-        if cliente_existe:
-            print(f"O cliente de cpf '{cpf}' já existe")
-            return False
-        else:
-            cursor.execute("INSERT INTO \"Projeto\".cliente values(%s, %s, %s, %s, %s)", nome, cpf, endereco, celular, dataCadastro)
-            conexao.commit()
-            print(f"Cliente criado com sucesso!")
-            return True
+        cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s)", idProduto, quantidade, validade)
+        conexao.commit()
+        print(f"Estoque gerado com sucesso!")
+        return True
     except Exception as error:
         print(f"Erro ao acessar o banco de dados: {error}")
         return False 
@@ -24,11 +18,11 @@ def criar_cliente(nome, cpf, endereco, celular, dataCadastro):
             cursor.close()
             conexao.close()
 
-def relatorio_clientes():
+def relatorio_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".cliente")
+        cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque")
         relatorio = cursor.fetchall()
         return relatorio
         
@@ -40,21 +34,21 @@ def relatorio_clientes():
             cursor.close()
             conexao.close()
 
-def editar_cliente(id, nome, cpf, endereco, celular, dataCadastro):
+def editar_estoque(idlote, idproduto, quantidade, validade):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".cliente where idCliente = %s", id)
-        func_existe = cursor.fetchone()
+        cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque where idLote = %s", id)
+        lote_existe = cursor.fetchone()
         
-        if func_existe:
-            cursor.execute("UPDATE \"Projeto\".cliente SET nomeCliente = %s, cpfcliente = %s, enderecocliente = %s, celularcliente = %s, dataCadastro = %s WHERE idCliente = %s", nome, cpf, endereco, celular, dataCadastro, id)
+        if lote_existe:
+            cursor.execute("UPDATE \"Projeto\".detalhe_estoque SET idProduto = %s, quantidade = %s, validade = %s, WHERE idLote = %s", idproduto, quantidade, validade, idlote)
             conexao.commit()
-            print(f"Funcionário com ID {id} atualizado com sucesso.")
+            print(f"Lote {id} alterado com sucesso.")
             return True
             
         else:
-            print("Falha na alteração, cliente não existe")
+            print("Falha na alteração, lote não existe")
             return False 
          
     except (Exception, psycopg2.DatabaseError) as error:
@@ -65,16 +59,16 @@ def editar_cliente(id, nome, cpf, endereco, celular, dataCadastro):
             cursor.close()
             conexao.close()
 
-def excluir_cliente(idcliente):
+def excluir_lote(idlote):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        confirmar_exclusao = input(f"Você tem certeza que quer excluir o cliente {idcliente}? (Isso o excluirá permanentemente!)\nS/N").upper()
+        confirmar_exclusao = input(f"Você tem certeza que quer excluir o lote {idlote}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":
-            cursor.execute('DELETE FROM \"Projeto\".cliente WHERE idCliente = %s', (idcliente,))
+            cursor.execute('DELETE FROM \"Projeto\".detalhe_estoque WHERE idLote = %s', (idlote,))
             conexao.commit()
-            print(f"cliente de id: {idcliente} excluído.")
+            print(f"Lote {idlote} excluído.")
             return True
         else:
             print("Exclusão cancelada.")

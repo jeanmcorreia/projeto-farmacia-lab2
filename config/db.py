@@ -6,7 +6,7 @@ def criar_conexao():
             dbname='postgres',
             user='postgres',
             password='021122',
-            host='localhost',
+            host='127.0.0.1',
             port='5432'
         )
         print("Conexão realizada com sucesso!")
@@ -14,3 +14,5 @@ def criar_conexao():
     except Exception as e:
         print(f"Erro ao conectar com o banco de dados: {e}")
         return None
+    
+criar_conexao()

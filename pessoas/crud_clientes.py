@@ -6,13 +6,13 @@ def criar_cliente(nome, cpf, endereco, celular, dataCadastro):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("Select cpf from \"Projeto\".cliente")
+        cursor.execute("Select cpfcliente from \"Projeto\".cliente where cpfcliente = %s", (cpf,))
         cliente_existe = cursor.fetchone()
         if cliente_existe:
             print(f"O cliente de cpf '{cpf}' já existe")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".cliente values(%s, %s, %s, %s, %s)", nome, cpf, endereco, celular, dataCadastro)
+            cursor.execute("INSERT INTO \"Projeto\".cliente(nomecliente, cpfcliente, enderecocliente, celularcliente, datacadastro) values(%s, %s, %s, %s, %s)", (nome, cpf, endereco, celular, dataCadastro))
             conexao.commit()
             print(f"Cliente criado com sucesso!")
             return True
@@ -30,7 +30,7 @@ def relatorio_clientes():
         cursor = conexao.cursor()
         cursor.execute("SELECT * FROM \"Projeto\".cliente")
         relatorio = cursor.fetchall()
-        return relatorio
+        print(relatorio)
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -44,11 +44,11 @@ def editar_cliente(id, nome, cpf, endereco, celular, dataCadastro):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".cliente where idCliente = %s", id)
-        func_existe = cursor.fetchone()
+        cursor.execute("SELECT * FROM \"Projeto\".cliente where idCliente = %s", (id,))
+        cliente_existe = cursor.fetchone()
         
-        if func_existe:
-            cursor.execute("UPDATE \"Projeto\".cliente SET nomeCliente = %s, cpfcliente = %s, enderecocliente = %s, celularcliente = %s, dataCadastro = %s WHERE idCliente = %s", nome, cpf, endereco, celular, dataCadastro, id)
+        if cliente_existe:
+            cursor.execute("UPDATE \"Projeto\".cliente SET nomeCliente = %s, cpfcliente = %s, enderecocliente = %s, celularcliente = %s, dataCadastro = %s WHERE idCliente = %s", (nome, cpf, endereco, celular, dataCadastro, id))
             conexao.commit()
             print(f"Funcionário com ID {id} atualizado com sucesso.")
             return True

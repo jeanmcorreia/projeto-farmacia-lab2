@@ -6,8 +6,6 @@ from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios,
 from produtos.crud_produtos import criar_produtos, relatorio_produtos, atualizar_produto, excluir_produto
 from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
 
-
-
 print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")
 OpcEnter = int(input("Digite a opção desejada: "))
 while OpcEnter != 1 and OpcEnter != 2:
@@ -23,8 +21,6 @@ if OpcEnter == 2:
         if cadastrar(Login,Senha):
             break
         
-
-
 elif OpcEnter == 1:
     Login = input("Digite seu user: ")
     Senha = input("Digite sua senha: ")
@@ -35,6 +31,6 @@ elif OpcEnter == 1:
         if autenticar(Login,Senha):
             break
 
-print("menu")
-        
+
+    
         

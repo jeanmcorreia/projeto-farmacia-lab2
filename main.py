@@ -30,7 +30,4 @@ elif OpcEnter == 1:
         autenticar(Login, Senha)
         if autenticar(Login,Senha):
             break
-
-
-    
-        
+ 

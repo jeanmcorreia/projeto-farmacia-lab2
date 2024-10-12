@@ -6,13 +6,13 @@ def criar_funcionario(nome, cpf, endereco, celular, data_admissao):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("Select cpf from \"Projeto\".funcionario")
+        cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
         funcionario_existe = cursor.fetchone()
         if funcionario_existe:
             print(f"O Funcionario de cpf '{cpf}' já existe")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".funcionario values(%s, %s, %s, %s, %s)", nome, cpf, endereco, celular, data_admissao)
+            cursor.execute("INSERT INTO \"Projeto\".funcionario(nomeFuncionario, cpfFuncionario, enderecoFuncionario, celularFuncionario, admissao) values(%s, %s, %s, %s, %s)", (nome, cpf, endereco, celular, data_admissao))
             conexao.commit()
             print(f"Funcionário criado com sucesso!")
             return True
@@ -30,7 +30,7 @@ def relatorio_funcionarios():
         cursor = conexao.cursor()
         cursor.execute("SELECT * FROM \"Projeto\".funcionario")
         relatorio = cursor.fetchall()
-        return relatorio
+        print(relatorio)
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -44,11 +44,11 @@ def editar_funcionario(id, nome, cpf, endereco, celular, data_admissao):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", id)
+        cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", (id,))
         func_existe = cursor.fetchone()
         
         if func_existe:
-            cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, admissao = %s WHERE idFuncionario = %s", nome, cpf, endereco, celular, data_admissao, id)
+            cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, admissao = %s WHERE idFuncionario = %s", (nome, cpf, endereco, celular, data_admissao, id))
             conexao.commit()
             print(f"Funcionário com ID {id} atualizado com sucesso.")
             return True
@@ -72,7 +72,7 @@ def excluir_funcionario(idfuncionario):
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o funcionario {idfuncionario}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":
-            cursor.execute('DELETE FROM \"Projeto\".funcionario WHERE id = %s', (idfuncionario,))
+            cursor.execute('DELETE FROM \"Projeto\".funcionario WHERE idfuncionario = %s', (idfuncionario,))
             conexao.commit()
             print(f"Funcionario de id: {idfuncionario} excluído.")
             return True

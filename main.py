@@ -3,7 +3,7 @@ from login.autenticar import autenticar
 from login.cadastrar import cadastrar
 from pessoas.crud_clientes import criar_cliente, relatorio_clientes, editar_cliente, excluir_cliente
 from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios, editar_funcionario, excluir_funcionario
-from produtos.crud_produtos import criar_produtos, relatorio_produtos, atualizar_produto, excluir_produto
+from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
 from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
 
 print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")

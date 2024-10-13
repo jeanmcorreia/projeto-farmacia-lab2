@@ -5,6 +5,7 @@ from pessoas.crud_clientes import criar_cliente, relatorio_clientes, editar_clie
 from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios, editar_funcionario, excluir_funcionario
 from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
 from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
+from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido
 
 print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")
 OpcEnter = int(input("Digite a opção desejada: "))

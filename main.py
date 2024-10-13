@@ -20,14 +20,3 @@ if OpcEnter == 2:
         cadastrar(Login,Senha)
         if cadastrar(Login,Senha):
             break
-        
-elif OpcEnter == 1:
-    Login = input("Digite seu user: ")
-    Senha = input("Digite sua senha: ")
-    while autenticar(Login,Senha) != True:
-        Login = input("Digite seu user: ")
-        Senha = input("Digite sua senha: ")
-        autenticar(Login, Senha)
-        if autenticar(Login,Senha):
-            break
- 

@@ -2,14 +2,21 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def gerar_estoque(idProduto, quantidade, validade):
+def gerar_estoque(idlote, idProduto, quantidade, validade):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s)", idProduto, quantidade, validade)
-        conexao.commit()
-        print(f"Estoque gerado com sucesso!")
-        return True
+        cursor.execute("Select idproduto, idlote from \"Projeto\".detalhe_estoque where idproduto = %s and idLote = %s and validade = %s", (idProduto, idlote, validade))
+        prodlote_existe = cursor.fetchone()
+        if prodlote_existe:
+            print(F" O produto de id'{idProduto}' já existe no lote de id '{idlote}'")
+            return False
+        else:
+            cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s, %s)", (idlote, idProduto, quantidade, validade))
+            conexao.commit()
+            print(f"Estoque gerado com sucesso!")
+            return True
+             
     except Exception as error:
         print(f"Erro ao acessar o banco de dados: {error}")
         return False 
@@ -24,7 +31,7 @@ def relatorio_estoque():
         cursor = conexao.cursor()
         cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque")
         relatorio = cursor.fetchall()
-        return relatorio
+        print(relatorio)
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -38,13 +45,13 @@ def editar_estoque(idlote, idproduto, quantidade, validade):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque where idLote = %s", id)
+        cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque where idLote = %s", (idlote,))
         lote_existe = cursor.fetchone()
         
         if lote_existe:
-            cursor.execute("UPDATE \"Projeto\".detalhe_estoque SET idProduto = %s, quantidade = %s, validade = %s, WHERE idLote = %s", idproduto, quantidade, validade, idlote)
+            cursor.execute("UPDATE \"Projeto\".detalhe_estoque SET idProduto = %s, quantidade = %s, validade = %s WHERE idLote = %s", (idproduto, quantidade, validade, idlote))
             conexao.commit()
-            print(f"Lote {id} alterado com sucesso.")
+            print(f"Lote '{idlote}' alterado com sucesso.")
             return True
             
         else:

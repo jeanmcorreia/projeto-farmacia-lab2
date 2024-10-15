@@ -7,22 +7,8 @@ from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_
 from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
 from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido
 
-'''
-print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")
-OpcEnter = int(input("Digite a opção desejada: "))
-while OpcEnter != 1 and OpcEnter != 2:
-    OpcEnter = int(input("Opção inválida! Digite a opção desejada (1 para Login ou 2 para Cadastro): "))
 
-if OpcEnter == 2:
-    Login = input("Digite seu user: ")
-    Senha = input("Digite sua senha: ")
-    while cadastrar(Login,Senha) != True:
-        Login = input("Digite o user desejado: ")
-        Senha = input("Digite a senha desejada: ")
-        cadastrar(Login,Senha)
-        if cadastrar(Login,Senha):
-            break
-'''
+
             
 def menu_opcoes():
     while True:
@@ -67,13 +53,23 @@ def menu_opcoes():
                             print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                             continue
                         if opcao_cliente == 1:
-                            criar_cliente()
-                        elif opcao_cliente == 2:
-                            relatorio_clientes()
+                            nomeC = input("Digite o nome do cliente: ")
+                            cpfC = input("Digite o cpf do cliente: ")
+                            EnderecoC = input("Digite o endereço do cliente: ")
+                            dataCadC = input("Digite a data que o cliente está sendo cadastrado: ")
+                            criar_cliente(nomeC, cpfC, EnderecoC, dataCadC)
+                        elif opcao_cliente == 2:   
+                            relatorio_clientes(idC, nomeC, cpfC, EnderecoC, dataCadC)
                         elif opcao_cliente == 3:
+                            idC = input("Digite o id do cliente: ")
+                            nomeC = input("Digite o nome atualizado do cliente: ")
+                            cpfC = input("Digite o cpf atualizado do cliente: ")
+                            EnderecoC = input("Digite o endereço atualizado do cliente: ")
+                            dataCadC = input("Digite a data que o cliente foi cadastrado atualizada: ")
                             editar_cliente()
                         elif opcao_cliente == 4:
-                            excluir_cliente()
+                            idC = input("Digite o id do cliente que deseja excluir: ")
+                            excluir_cliente(idC)
                         elif opcao_cliente == 0:
                             break
                         else:
@@ -92,13 +88,25 @@ def menu_opcoes():
                             print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                             continue
                         if opcao_funcionario == 1:
-                            criar_funcionario()
+                            nomeF = input("Digite o nome do cliente: ")
+                            cpfF = input("Digite o cpf do cliente: ")
+                            EnderecoF = input("Digite o endereço do cliente: ")
+                            CelularF = input("Digite o celular do funcionário: ")
+                            dataCadF = input("Digite a data que o cliente está sendo cadastrado: ")
+                            criar_funcionario(nomeF, cpfF, EnderecoF, CelularF, dataCadF)
                         elif opcao_funcionario == 2:
                             relatorio_funcionarios()
                         elif opcao_funcionario == 3:
-                            editar_funcionario()
+                            idf = ("Digite o id do funcionario: ")
+                            nomeF = input("Digite o nome atualizado do funcionario: ")
+                            cpfF = input("Digite o cpf atualizado do funcionario: ")
+                            EnderecoF = input("Digite o endereço atualizado do funcionario: ")
+                            CelularF = input("Digite o celular atualizado do funcionário: ")
+                            dataCadF = input("Digite a data que o funcionario foi cadastrado atualizada: ")
+                            editar_funcionario(idf, nomeF, cpfF, EnderecoF, CelularF, dataCadF)
                         elif opcao_funcionario == 4:
-                            excluir_funcionario()
+                            idf = ("Digite o id do funcionario: ")
+                            excluir_funcionario(idf)
                         elif opcao_funcionario == 0:
                             break
                         else:
@@ -122,13 +130,22 @@ def menu_opcoes():
                     print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                     continue
                 if opcao_estoque == 1:
-                    gerar_estoque()
+                    idE = ("Digite o id do lote: ")
+                    idprodutoE = input("Digite o id do produto contindo no lote: ")
+                    quantidadeE = input("Digite a quantidade do produto contindo no lote: ")
+                    validadeE = input("Digite a data de validade desse lote: ")
+                    gerar_estoque(idE, idprodutoE, quantidadeE, validadeE)
                 elif opcao_estoque == 2:
                     relatorio_estoque()
                 elif opcao_estoque == 3:
-                    editar_estoque()
+                    idE = ("Digite o id do lote: ")
+                    idprodutoE = input("Digite o id atualizado do produto contindo no lote: ")
+                    quantidadeE = input("Digite a quantidade atualizada do produto contindo no lote: ")
+                    validadeE = input("Digite a data atualizada de validade desse lote: ")
+                    editar_estoque(idE, idprodutoE, quantidadeE, validadeE)
                 elif opcao_estoque == 4:
-                    excluir_lote()
+                    idE = ("Digite o id do lote: ")
+                    excluir_lote(idE)
                 elif opcao_estoque == 0:
                     break
                 else:
@@ -147,13 +164,23 @@ def menu_opcoes():
                     print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                     continue
                 if opcao_produto == 1:
-                    criar_produto()
+                    nomeP = ("Digite o nome do produto: ")
+                    precoP = input("digite o valor do produto: ")
+                    categoriaP = input("Digite o id da categoria do produto: ")
+                    tarjaP = input("Digite a tarja do produto(caso tenha): ")
+                    criar_produto(nomeP, precoP, categoriaP, tarjaP)
                 elif opcao_produto == 2:
                     relatorio_produtos()
+                    idP = ("Digite o id do produto: ")
+                    nomeP = ("Digite o nome do atualizado produto: ")
+                    precoP = input("digite o valor atualizado do produto: ")
+                    categoriaP = input("Digite o id atualizado da categoria do produto: ")
+                    tarjaP = input("Digite a tarja atualizado do produto(caso tenha): ")
                 elif opcao_produto == 3:
-                    atualizar_produto()
+                    atualizar_produto(idP, nomeP, precoP, categoriaP, tarjaP)
                 elif opcao_produto == 4:
-                    excluir_produto()
+                    idP = ("Digite o id do produto: ")
+                    excluir_produto(idP)
                 elif opcao_produto == 0:
                     break
                 else:
@@ -172,57 +199,61 @@ def menu_opcoes():
                     print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                     continue
                 if opcao_pedido == 1:
-                    gerar_pedido()
+                    ClientePE = ("Digite o id do cliente que fez o pedido: ")
+                    FuncPe = ("Digite o nome do funcionario responsável pelo pedido: ")
+                    FormadePgtPE = input("digite a forma de pagamento: ")
+                    DataPE = input("Digite a data que o pedido esta sendo efetuado: ")
+                    gerar_pedido(ClientePE, FuncPe, FormadePgtPE, DataPE)
                 elif opcao_pedido == 2:
                     relatorio_pedidos()
+                    
                 elif opcao_pedido == 3:
+                    idPE = int(input("Digite o id do pedido: "))
+                    ClientePE = ("Digite o id atualizado do cliente que fez o pedido: ")
+                    FuncPe = ("Digite o nome atualizado do funcionario responsável pelo pedido: ")
+                    FormadePgtPE = input("digite a forma de pagamento atualizada: ")
+                    DataPE = input("Digite a data atualizada que o pedido foi efetuado: ")
                     editar_pedido()
                 elif opcao_pedido == 4:
-                    excluir_pedido()
+                    ClientePE = ("Digite o id atualizado do cliente que fez o pedido: ")
+                    FuncPe = ("Digite o nome atualizado do funcionario responsável pelo pedido: ")
+                    FormadePgtPE = input("digite a forma de pagamento atualizada: ")
+                    DataPE = input("Digite a data atualizada que o pedido foi efetuado: ")
+                    idPE = int(input("Digite o id do pedido: "))
+                    excluir_pedido(idPE)
                 elif opcao_pedido == 0:
                     break
                 else:
                     print("Digite uma opção válida!")
         else:
             print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
-
-def cadastro():
-    while True:
-        nome_usuario = input("Crie um nome de usuário: ")
-        senha_usuario = input("Crie uma senha: ")
-        if cadastrar(nome_usuario, senha_usuario):
-            print("Cadastro realizado!")
-            return
-        else:
-            print("Cadastro falhou.")
-
-def login():
-    login_usuario = input("Digite seu nome de usuário: ")
-    senha_usuario = input("Digite sua senha de usuário: ")
-    if autenticar(login_usuario, senha_usuario):
-        return
-    else:
-        print("Senha ou usuário incorretos!")
     
 def main():
-    print("Seja Bem Vindo !:\n1 - Logar\n2 - Cadastrar")
-    while True:
-        try:
-            opcao_main = int(input("Digite a opção desejada: "))
-            while opcao_main != 1 and opcao_main != 2:
-                opcao_main = int(input("Opção inválida! Digite a opção desejada (1 para Logar ou 2 para Cadastrar): "))
-        except ValueError:
-            print("Entrada inválida! Por favor, digite um número.")
-            continue
+    print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")
+    OpcEnter = int(input("Digite a opção desejada: "))
+    while OpcEnter != 1 and OpcEnter != 2:
+        OpcEnter = int(input("Opção inválida! Digite a opção desejada (1 para Login ou 2 para Cadastro): "))
 
-        if opcao_main == 1:
-            login()
-            menu_opcoes()
-            break
-        elif opcao_main == 2:
-            cadastro()
-            menu_opcoes()
-            break
+    if OpcEnter == 2:
+        Login = input("Digite seu user: ")
+        Senha = input("Digite sua senha: ")
+        while cadastrar(Login,Senha) != True:
+            Login = input("Digite o user desejado: ")
+            Senha = input("Digite a senha desejada: ")
+            cadastrar(Login,Senha)
+            if cadastrar(Login,Senha):
+                break
+        
+    elif OpcEnter == 1:
+        Login = input("Digite seu user: ")
+        Senha = input("Digite sua senha: ")
+        while autenticar(Login,Senha) != True:
+            Login = input("Digite seu user: ")
+            Senha = input("Digite sua senha: ")
+            autenticar(Login, Senha)
+            if autenticar(Login,Senha):
+                break
+    menu_opcoes()
 
 if __name__ == "__main__":
     main()

@@ -61,14 +61,14 @@ def menu_opcoes():
                         elif opcao_cliente == 2:   
                             relatorio_clientes(idC, nomeC, cpfC, EnderecoC, dataCadC)
                         elif opcao_cliente == 3:
-                            idC = input("Digite o id do cliente: ")
+                            idC = int(input("Digite o id do cliente: "))
                             nomeC = input("Digite o nome atualizado do cliente: ")
                             cpfC = input("Digite o cpf atualizado do cliente: ")
                             EnderecoC = input("Digite o endereço atualizado do cliente: ")
                             dataCadC = input("Digite a data que o cliente foi cadastrado atualizada: ")
                             editar_cliente()
                         elif opcao_cliente == 4:
-                            idC = input("Digite o id do cliente que deseja excluir: ")
+                            idC = int(input("Digite o id do cliente que deseja excluir: "))
                             excluir_cliente(idC)
                         elif opcao_cliente == 0:
                             break
@@ -97,7 +97,7 @@ def menu_opcoes():
                         elif opcao_funcionario == 2:
                             relatorio_funcionarios()
                         elif opcao_funcionario == 3:
-                            idf = ("Digite o id do funcionario: ")
+                            idf = int(input("Digite o id do funcionario: "))
                             nomeF = input("Digite o nome atualizado do funcionario: ")
                             cpfF = input("Digite o cpf atualizado do funcionario: ")
                             EnderecoF = input("Digite o endereço atualizado do funcionario: ")
@@ -105,7 +105,7 @@ def menu_opcoes():
                             dataCadF = input("Digite a data que o funcionario foi cadastrado atualizada: ")
                             editar_funcionario(idf, nomeF, cpfF, EnderecoF, CelularF, dataCadF)
                         elif opcao_funcionario == 4:
-                            idf = ("Digite o id do funcionario: ")
+                            idf = int(input("Digite o id do funcionario: "))
                             excluir_funcionario(idf)
                         elif opcao_funcionario == 0:
                             break
@@ -130,21 +130,21 @@ def menu_opcoes():
                     print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                     continue
                 if opcao_estoque == 1:
-                    idE = ("Digite o id do lote: ")
-                    idprodutoE = input("Digite o id do produto contindo no lote: ")
-                    quantidadeE = input("Digite a quantidade do produto contindo no lote: ")
+                    idE = int(input("Digite o id do lote: "))
+                    idprodutoE = int(input("Digite o id do produto contindo no lote: "))
+                    quantidadeE = int(input("Digite a quantidade do produto contindo no lote: "))
                     validadeE = input("Digite a data de validade desse lote: ")
                     gerar_estoque(idE, idprodutoE, quantidadeE, validadeE)
                 elif opcao_estoque == 2:
                     relatorio_estoque()
                 elif opcao_estoque == 3:
-                    idE = ("Digite o id do lote: ")
-                    idprodutoE = input("Digite o id atualizado do produto contindo no lote: ")
-                    quantidadeE = input("Digite a quantidade atualizada do produto contindo no lote: ")
+                    idE = int(input("Digite o id do lote: "))
+                    idprodutoE = int(input("Digite o id atualizado do produto contindo no lote: "))
+                    quantidadeE = int(input("Digite a quantidade atualizada do produto contindo no lote: "))
                     validadeE = input("Digite a data atualizada de validade desse lote: ")
                     editar_estoque(idE, idprodutoE, quantidadeE, validadeE)
                 elif opcao_estoque == 4:
-                    idE = ("Digite o id do lote: ")
+                    idE = int(input("Digite o id do lote: "))
                     excluir_lote(idE)
                 elif opcao_estoque == 0:
                     break
@@ -171,15 +171,15 @@ def menu_opcoes():
                     criar_produto(nomeP, precoP, categoriaP, tarjaP)
                 elif opcao_produto == 2:
                     relatorio_produtos()
-                    idP = ("Digite o id do produto: ")
+                elif opcao_produto == 3:
+                    idP = int(input("Digite o id do produto: "))
                     nomeP = ("Digite o nome do atualizado produto: ")
-                    precoP = input("digite o valor atualizado do produto: ")
+                    precoP = float(input("digite o valor atualizado do produto: "))
                     categoriaP = input("Digite o id atualizado da categoria do produto: ")
                     tarjaP = input("Digite a tarja atualizado do produto(caso tenha): ")
-                elif opcao_produto == 3:
                     atualizar_produto(idP, nomeP, precoP, categoriaP, tarjaP)
                 elif opcao_produto == 4:
-                    idP = ("Digite o id do produto: ")
+                    idP = int(input("Digite o id do produto: "))
                     excluir_produto(idP)
                 elif opcao_produto == 0:
                     break
@@ -199,8 +199,8 @@ def menu_opcoes():
                     print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
                     continue
                 if opcao_pedido == 1:
-                    ClientePE = ("Digite o id do cliente que fez o pedido: ")
-                    FuncPe = ("Digite o nome do funcionario responsável pelo pedido: ")
+                    ClientePE = int(input("Digite o id do cliente que fez o pedido: "))
+                    FuncPe = int(input("Digite o nome do funcionario responsável pelo pedido: "))
                     FormadePgtPE = input("digite a forma de pagamento: ")
                     DataPE = input("Digite a data que o pedido esta sendo efetuado: ")
                     gerar_pedido(ClientePE, FuncPe, FormadePgtPE, DataPE)
@@ -209,14 +209,14 @@ def menu_opcoes():
                     
                 elif opcao_pedido == 3:
                     idPE = int(input("Digite o id do pedido: "))
-                    ClientePE = ("Digite o id atualizado do cliente que fez o pedido: ")
-                    FuncPe = ("Digite o nome atualizado do funcionario responsável pelo pedido: ")
+                    ClientePE = int(input("Digite o id atualizado do cliente que fez o pedido: "))
+                    FuncPe = int(input("Digite o nome atualizado do funcionario responsável pelo pedido: "))
                     FormadePgtPE = input("digite a forma de pagamento atualizada: ")
                     DataPE = input("Digite a data atualizada que o pedido foi efetuado: ")
                     editar_pedido()
                 elif opcao_pedido == 4:
-                    ClientePE = ("Digite o id atualizado do cliente que fez o pedido: ")
-                    FuncPe = ("Digite o nome atualizado do funcionario responsável pelo pedido: ")
+                    ClientePE = int(input("Digite o id atualizado do cliente que fez o pedido: "))
+                    FuncPe = int(input("Digite o nome atualizado do funcionario responsável pelo pedido: "))
                     FormadePgtPE = input("digite a forma de pagamento atualizada: ")
                     DataPE = input("Digite a data atualizada que o pedido foi efetuado: ")
                     idPE = int(input("Digite o id do pedido: "))

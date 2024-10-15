@@ -27,26 +27,10 @@ if OpcEnter == 2:
 def menu_opcoes():
     while True:
         print("\nMenu de Opções:")
-        print("1 - Criar Cliente")
-        print("2 - Relatório de Clientes")
-        print("3 - Editar Cliente")
-        print("4 - Excluir Cliente")
-        print("5 - Criar Funcionário")
-        print("6 - Relatório de Funcionários")
-        print("7 - Editar Funcionário")
-        print("8 - Excluir Funcionário")
-        print("9 - Criar Produto")
-        print("10 - Relatório de Produtos")
-        print("11 - Atualizar Produto")
-        print("12 - Excluir Produto")
-        print("13 - Gerar Estoque")
-        print("14 - Relatório de Estoque")
-        print("15 - Editar Estoque")
-        print("16 - Excluir Lote")
-        print("17 - Gerar Pedido")
-        print("18 - Relatório de Pedidos")
-        print("19 - Editar Pedido")
-        print("20 - Excluir Pedido")
+        print("1 - Pessoas")
+        print("2 - Estoque")
+        print("3 - Produtos")
+        print("4 - Pedidos")
         print("0 - Sair")
 
         try:
@@ -59,45 +43,146 @@ def menu_opcoes():
             print("Sistema encerrado! PF PROGRAME EM JAVA")
             break
         elif opcao == 1:
-            criar_cliente()
+            while True:
+                print("\nEscolha uma opção:")
+                print("1 - Clientes")
+                print("2 - Funcionários")
+                print("0 - Voltar")
+                try:
+                    opcao_pessoas = int(input("Digite a opção desejada: "))
+                except ValueError:
+                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    continue
+                if opcao_pessoas == 1:
+                    while True:
+                        print("\nEscolha uma opção:")
+                        print("1 - Criar cliente")
+                        print("2 - Relatório cliente")
+                        print("3 - Editar cliente")
+                        print("4 - Excluir cliente")
+                        print("0 - Voltar")
+                        try:
+                            opcao_cliente = int(input("Digite a opção desejada: "))
+                        except ValueError:
+                            print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                            continue
+                        if opcao_cliente == 1:
+                            criar_cliente()
+                        elif opcao_cliente == 2:
+                            relatorio_clientes()
+                        elif opcao_cliente == 3:
+                            editar_cliente()
+                        elif opcao_cliente == 4:
+                            excluir_cliente()
+                        elif opcao_cliente == 0:
+                            break
+                        else:
+                            print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
+                elif opcao_pessoas == 2:
+                    while True:
+                        print("\nEscolha uma opção:")
+                        print("1 - Criar funcionário")
+                        print("2 - Relatório funcionário")
+                        print("3 - Editar funcionário")
+                        print("4 - Excluir funcionário")
+                        print("0 - Voltar")
+                        try:
+                            opcao_funcionario = int(input("Digite a opção desejada: "))
+                        except ValueError:
+                            print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                            continue
+                        if opcao_funcionario == 1:
+                            criar_funcionario()
+                        elif opcao_funcionario == 2:
+                            relatorio_funcionarios()
+                        elif opcao_funcionario == 3:
+                            editar_funcionario()
+                        elif opcao_funcionario == 4:
+                            excluir_funcionario()
+                        elif opcao_funcionario == 0:
+                            break
+                        else:
+                            print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
+                elif opcao_pessoas == 0:
+                    break
+                else:
+                    print("Escolha uma opção válida!")
+
         elif opcao == 2:
-            relatorio_clientes()
+            while True:
+                print("\nEscolha uma opção:")
+                print("1 - Gerar estoque")
+                print("2 - Relatório estoque")
+                print("3 - Editar estoque")
+                print("4 - Excluir estoque")
+                print("0 - Voltar")
+                try:
+                    opcao_estoque = int(input("Digite a opção desejada: "))
+                except ValueError:
+                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    continue
+                if opcao_estoque == 1:
+                    gerar_estoque()
+                elif opcao_estoque == 2:
+                    relatorio_estoque()
+                elif opcao_estoque == 3:
+                    editar_estoque()
+                elif opcao_estoque == 4:
+                    excluir_lote()
+                elif opcao_estoque == 0:
+                    break
+                else:
+                    print("Digite uma opção válida!")
         elif opcao == 3:
-            editar_cliente()
+            while True:
+                print("\nEscolha uma opção:")
+                print("1 - Criar produto")
+                print("2 - Relatório produto")
+                print("3 - Editar produto")
+                print("4 - Excluir produto")
+                print("0 - Voltar")
+                try:
+                    opcao_produto = int(input("Digite a opção desejada: "))
+                except ValueError:
+                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    continue
+                if opcao_produto == 1:
+                    criar_produto()
+                elif opcao_produto == 2:
+                    relatorio_produtos()
+                elif opcao_produto == 3:
+                    atualizar_produto()
+                elif opcao_produto == 4:
+                    excluir_produto()
+                elif opcao_produto == 0:
+                    break
+                else:
+                    print("Digite uma opção válida!")
         elif opcao == 4:
-            excluir_cliente()
-        elif opcao == 5:
-            criar_funcionario()
-        elif opcao == 6:
-            relatorio_funcionarios()
-        elif opcao == 7:
-            editar_funcionario()
-        elif opcao == 8:
-            excluir_funcionario()
-        elif opcao == 9:
-            criar_produto()
-        elif opcao == 10:
-            relatorio_produtos()
-        elif opcao == 11:
-            atualizar_produto()
-        elif opcao == 12:
-            excluir_produto()
-        elif opcao == 13:
-            gerar_estoque()
-        elif opcao == 14:
-            relatorio_estoque()
-        elif opcao == 15:
-            editar_estoque()
-        elif opcao == 16:
-            excluir_lote()
-        elif opcao == 17:
-            gerar_pedido()
-        elif opcao == 18:
-            relatorio_pedidos()
-        elif opcao == 19:
-            editar_pedido()
-        elif opcao == 20:
-            excluir_pedido()
+            while True:
+                print("\nEscolha uma opção:")
+                print("1 - Gerar pedido")
+                print("2 - Relatório pedidos")
+                print("3 - Editar pedido")
+                print("4 - Excluir pedido")
+                print("0 - Voltar")
+                try:
+                    opcao_pedido = int(input("Digite a opção desejada: "))
+                except ValueError:
+                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    continue
+                if opcao_pedido == 1:
+                    gerar_pedido()
+                elif opcao_pedido == 2:
+                    relatorio_pedidos()
+                elif opcao_pedido == 3:
+                    editar_pedido()
+                elif opcao_pedido == 4:
+                    excluir_pedido()
+                elif opcao_pedido == 0:
+                    break
+                else:
+                    print("Digite uma opção válida!")
         else:
             print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
 

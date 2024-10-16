@@ -22,11 +22,11 @@ def menu_opcoes():
         try:
             opcao = int(input("Digite a opção desejada: "))
         except ValueError:
-            print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+            print("Digite um número inteiro válido.")
             continue
         
         if opcao == 0:
-            print("Sistema encerrado! PF PROGRAME EM JAVA")
+            print("Sistema encerrado!")
             break
         elif opcao == 1:
             while True:
@@ -37,7 +37,7 @@ def menu_opcoes():
                 try:
                     opcao_pessoas = int(input("Digite a opção desejada: "))
                 except ValueError:
-                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    print("Digite um número inteiro válido.")
                     continue
                 if opcao_pessoas == 1:
                     while True:
@@ -50,7 +50,7 @@ def menu_opcoes():
                         try:
                             opcao_cliente = int(input("Digite a opção desejada: "))
                         except ValueError:
-                            print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                            print("Digite um número inteiro válido.")
                             continue
                         if opcao_cliente == 1:
                             nomeC = input("Digite o nome do cliente: ")
@@ -73,7 +73,7 @@ def menu_opcoes():
                         elif opcao_cliente == 0:
                             break
                         else:
-                            print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
+                            print("Escolha uma opção válida.")
                 elif opcao_pessoas == 2:
                     while True:
                         print("\nEscolha uma opção:")
@@ -85,7 +85,7 @@ def menu_opcoes():
                         try:
                             opcao_funcionario = int(input("Digite a opção desejada: "))
                         except ValueError:
-                            print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                            print("Digite um número inteiro válido.")
                             continue
                         if opcao_funcionario == 1:
                             nomeF = input("Digite o nome do cliente: ")
@@ -110,7 +110,7 @@ def menu_opcoes():
                         elif opcao_funcionario == 0:
                             break
                         else:
-                            print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
+                            print("Escolha uma opção válida.")
                 elif opcao_pessoas == 0:
                     break
                 else:
@@ -127,7 +127,7 @@ def menu_opcoes():
                 try:
                     opcao_estoque = int(input("Digite a opção desejada: "))
                 except ValueError:
-                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    print("Digite um número inteiro válido.")
                     continue
                 if opcao_estoque == 1:
                     idE = int(input("Digite o id do lote: "))
@@ -161,7 +161,7 @@ def menu_opcoes():
                 try:
                     opcao_produto = int(input("Digite a opção desejada: "))
                 except ValueError:
-                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    print("Digite um número inteiro válido.")
                     continue
                 if opcao_produto == 1:
                     nomeP = ("Digite o nome do produto: ")
@@ -196,7 +196,7 @@ def menu_opcoes():
                 try:
                     opcao_pedido = int(input("Digite a opção desejada: "))
                 except ValueError:
-                    print("MEU AMIGO DIGITE UM NÚMERO VALIDO.")
+                    print("Digite um número inteiro válido.")
                     continue
                 if opcao_pedido == 1:
                     ClientePE = int(input("Digite o id do cliente que fez o pedido: "))
@@ -226,7 +226,7 @@ def menu_opcoes():
                 else:
                     print("Digite uma opção válida!")
         else:
-            print("ESCOLHA UMA OPCAO VÁLIDA PHP DEVELOPER.")
+            print("Digite uma opção válida.")
     
 def main():
     print("Seja Bem Vindo !:\n1 - Login\n2 - Cadastro")

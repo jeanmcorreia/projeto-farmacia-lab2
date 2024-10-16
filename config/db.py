@@ -3,11 +3,11 @@ import psycopg2
 def criar_conexao():
     try:
         conn = psycopg2.connect(
-            dbname='postgres',
-            user='postgres',
-            password= '021122',
-            host= '127.0.0.1',
-            port= '5432'
+            dbname='DBNAME',
+            user='DB_USER',
+            password= 'DB_PASSWORD',
+            host= 'DB_HOST',
+            port= 'DB_PORT'
         )
         print("Conexão realizada com sucesso!")
         return conn

@@ -36,7 +36,7 @@ Para executar o projeto localmente, siga os passos abaixo:
    python -m venv venv
    source venv/bin/activate  # Para Windows use `venv\Scripts\activate`
    ```
-4. Instale as dependências necessárias, se houver:
+4. Instale as dependências necessárias:
    ```bash
    pip install -r requirements.txt
    ```

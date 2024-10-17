@@ -14,13 +14,11 @@ def gerar_pedido(cliente, funcionario, formadepgt, datapedido):
             idproduto = input(f"Digite o ID do produto ou 'F' para finalizar: ")
             if idproduto == "F":
                 break
-            quantidade = input(f"Digite a quantidade do produto ou 'F' para finalizar: ")
-            if quantidade == "F":
-                break
+            quantidade = input(f"Digite a quantidade do produto: ")
             cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
                 
-        cursor.execute(
-            "UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)",(idpedido,))
+        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)",(idpedido,))
+        cursor.execute("UPDATE \"Projeto\".detalhe_estoque set quantidade = quantidade - %s where idproduto = %s ", (quantidade, idproduto))
 
         conexao.commit()
         print(f"Pedidos gerado com sucesso e produtos adicionados!")

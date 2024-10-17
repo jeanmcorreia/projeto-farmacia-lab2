@@ -8,7 +8,6 @@
 4. [Estrutura do Projeto](#estrutura-do-projeto)
 5. [Uso](#uso)
 6. [Configuração do Banco de Dados](#configuração-do-banco-de-dados)
-7. [Licença](#licença)
 
 ## Descrição do Projeto
 
@@ -79,3 +78,5 @@ A aplicação é executada pelo terminal e permite as seguintes operações:
 ## Configuração do Banco de Dados
 
 O banco de dados utilizado é o PostgreSQL. As configurações de conexão devem ser ajustadas na pasta `config`. Certifique-se de que o banco de dados esteja acessível e que as credenciais estejam corretas.
+
+Todo o script do banco de dados está no arquivo [`BdFarmacia-1.sql`](/BdFarmacia-1.sql)

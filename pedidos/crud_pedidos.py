@@ -11,14 +11,15 @@ def gerar_pedido(cliente, funcionario, formadepgt, datapedido):
         idpedido = cursor.fetchone()[0]
 
         while True:
-            idproduto = input(f"Digite o ID do produto ou 'F' para finalizar: ")
-            if idproduto == "F":
+            idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
+            if idproduto == 0:
                 break
             quantidade = input(f"Digite a quantidade do produto: ")
             cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
+            cursor.execute("UPDATE \"Projeto\".detalhe_estoque set quantidade = quantidade - %s where idproduto = %s ", (quantidade, idproduto))
                 
         cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)",(idpedido,))
-        cursor.execute("UPDATE \"Projeto\".detalhe_estoque set quantidade = quantidade - %s where idproduto = %s ", (quantidade, idproduto))
+        
 
         conexao.commit()
         print(f"Pedidos gerado com sucesso e produtos adicionados!")
@@ -104,8 +105,8 @@ def excluir_pedido(idpedido):
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o pedido {idpedido}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":
-            cursor.execute('DELETE FROM \"Projeto\".pedido WHERE idpedido = %s', (idpedido,))
             cursor.execute('DELETE FROM \"Projeto\".tbl_detalhe_pedidos WHERE idpedido = %s', (idpedido,))
+            cursor.execute('DELETE FROM \"Projeto\".pedido WHERE idpedido = %s', (idpedido,))
             conexao.commit()
             print(f"Pedido {idpedido} excluído.")
             return True

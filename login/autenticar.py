@@ -1,6 +1,7 @@
 from config.db import criar_conexao
 import psycopg2  
 
+
 def autenticar(login, senha):
     try:
        

@@ -37,7 +37,11 @@ def criar_produto(nome, preco, categoria, tarja): #CREATE
                     obs = input("Digite exemplos de produtos que se enquadrem nessa categoria: ")
                     cursor.execute("INSERT INTO \"Projeto\".categoria (descricao, obs) VALUES (%s, %s)", (descricao, obs))
                     conexao.commit()
+                    cursor.execute("INSERT INTO \"Projeto\".produto (nomeproduto, preco, idcategoria, tarja) VALUES (%s, %s, %s, %s)", (nome, preco, categoria, tarja))
+                    conexao.commit()
                     print(f"Categoria {descricao} criada com sucesso!")
+                    print(f"Produto {nome} criado com sucesso!")
+                    
                     return True
                 
                 elif criar == "N":

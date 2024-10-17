@@ -6,7 +6,7 @@ def gerar_pedido(cliente, funcionario, formadepgt, datapedido):
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("INSERT INTO \"Projeto\".pedido(idcliente, idfuncionario, formapagamento, datapedido) VALUES(%s, %s, %s, %s)", (cliente, funcionario, formadepgt, datapedido))
+        cursor.execute("INSERT INTO \"Projeto\".pedido (idcliente, idfuncionario, formapagamento, datapedido) VALUES (%s, %s, %s, %s)", (cliente, funcionario, formadepgt, datapedido))
         cursor.execute("SELECT idPedido FROM \"Projeto\".pedido ORDER BY idPedido DESC LIMIT 1")
         idpedido = cursor.fetchone()[0]
 
@@ -14,23 +14,41 @@ def gerar_pedido(cliente, funcionario, formadepgt, datapedido):
             idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
             if idproduto == 0:
                 break
-            quantidade = input(f"Digite a quantidade do produto: ")
-            cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
-            cursor.execute("UPDATE \"Projeto\".detalhe_estoque set quantidade = quantidade - %s where idproduto = %s ", (quantidade, idproduto))
+            
+            cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque WHERE idProduto = %s", (idproduto,))
+            produto_existe = cursor.fetchone()
+            
+            if produto_existe:
+                quantidade = input(f"Digite a quantidade do produto: ")
                 
-        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)",(idpedido,))
-        
+                try:
+                    quantidade = int(quantidade)
+                except ValueError:
+                    print("Por favor, digite um número válido para a quantidade.")
+                    continue
+                
+                cursor.execute("SELECT quantidade FROM \"Projeto\".detalhe_estoque WHERE idProduto = %s", (idproduto,))
+                estoque = cursor.fetchone()
+                
+                if estoque and estoque[0] >= quantidade:
+                    cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
+                    cursor.execute("UPDATE \"Projeto\".detalhe_estoque SET quantidade = quantidade - %s WHERE idproduto = %s", (quantidade, idproduto))
+                else:
+                    print(f"Quantidade solicitada ({quantidade}) não disponível em estoque.")
 
+        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)", (idpedido,))
+        
         conexao.commit()
-        print(f"Pedidos gerado com sucesso e produtos adicionados!")
+        print("Pedido gerado com sucesso e produtos adicionados!")
         return True
+
     except Exception as error:
         print(f"Erro ao acessar o banco de dados: {error}")
         return False 
 
     finally:
-            cursor.close()
-            conexao.close()
+        cursor.close()
+        conexao.close()
 
 def relatorio_pedidos():
     try:

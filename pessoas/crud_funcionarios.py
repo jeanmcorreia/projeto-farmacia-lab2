@@ -2,10 +2,15 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def criar_funcionario(nome, cpf, endereco, celular, data_admissao):
+def criar_funcionario():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        nome = input("Digite o nome do funcionario: ")
+        cpf = input("Digite o cpf do funcionario: ")
+        endereco = input("Digite o endereço do funcionario: ")
+        celular = input("Digite o celular do funcionario: ")
+        data_admissao = input("Digite a data que o funcionario está sendo cadastrado: ")
         cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
         funcionario_existe = cursor.fetchone()
         if funcionario_existe:
@@ -40,10 +45,16 @@ def relatorio_funcionarios():
             cursor.close()
             conexao.close()
 
-def editar_funcionario(id, nome, cpf, endereco, celular, data_admissao):
+def editar_funcionario():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        id = int(input("Digite o id do funcionario: "))
+        nome = input("Digite o nome atualizado do funcionario: ")
+        cpf = input("Digite o cpf atualizado do funcionario: ")
+        endereco = input("Digite o endereço atualizado do funcionario: ")
+        celular = input("Digite o celular atualizado do funcionário: ")
+        data_admissao = input("Digite a data que o funcionario foi cadastrado atualizada: ")
         cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", (id,))
         func_existe = cursor.fetchone()
         
@@ -65,10 +76,11 @@ def editar_funcionario(id, nome, cpf, endereco, celular, data_admissao):
             cursor.close()
             conexao.close()
 
-def excluir_funcionario(idfuncionario):
+def excluir_funcionario():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idfuncionario = int(input("Digite o id do funcionario: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o funcionario {idfuncionario}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":

@@ -53,25 +53,13 @@ def menu_opcoes():
                             print("Digite um número inteiro válido.")
                             continue
                         if opcao_cliente == 1:
-                            nomeC = input("Digite o nome do cliente: ")
-                            cpfC = input("Digite o cpf do cliente: ")
-                            EnderecoC = input("Digite o endereço do cliente: ")
-                            celularC = input("Digite o numero de celular do cliente: ")
-                            dataCadC = input("Digite a data que o cliente está sendo cadastrado: ")
-                            criar_cliente(nomeC, cpfC, EnderecoC, celularC, dataCadC)
+                            criar_cliente()
                         elif opcao_cliente == 2:   
                             relatorio_clientes()
                         elif opcao_cliente == 3:
-                            idC = int(input("Digite o id do cliente: "))
-                            nomeC = input("Digite o nome atualizado do cliente: ")
-                            cpfC = input("Digite o cpf atualizado do cliente: ")
-                            EnderecoC = input("Digite o endereço atualizado do cliente: ")
-                            celularC = input("Digite o numero de celular atualizado do cliente: ")
-                            dataCadC = input("Digite a data que o cliente foi cadastrado atualizada: ")
-                            editar_cliente(idC, nomeC, cpfC, EnderecoC, celularC, dataCadC)
-                        elif opcao_cliente == 4:
-                            idC = int(input("Digite o id do cliente que deseja excluir: "))
-                            excluir_cliente(idC)
+                            editar_cliente()
+                        elif opcao_cliente == 4:                           
+                            excluir_cliente()
                         elif opcao_cliente == 0:
                             break
                         else:
@@ -89,26 +77,14 @@ def menu_opcoes():
                         except ValueError:
                             print("Digite um número inteiro válido.")
                             continue
-                        if opcao_funcionario == 1:
-                            nomeF = input("Digite o nome do funcionario: ")
-                            cpfF = input("Digite o cpf do funcionario: ")
-                            EnderecoF = input("Digite o endereço do funcionario: ")
-                            CelularF = input("Digite o celular do funcionario: ")
-                            dataCadF = input("Digite a data que o funcionario está sendo cadastrado: ")
-                            criar_funcionario(nomeF, cpfF, EnderecoF, CelularF, dataCadF)
+                        if opcao_funcionario == 1:                            
+                            criar_funcionario()
                         elif opcao_funcionario == 2:
                             relatorio_funcionarios()
-                        elif opcao_funcionario == 3:
-                            idf = int(input("Digite o id do funcionario: "))
-                            nomeF = input("Digite o nome atualizado do funcionario: ")
-                            cpfF = input("Digite o cpf atualizado do funcionario: ")
-                            EnderecoF = input("Digite o endereço atualizado do funcionario: ")
-                            CelularF = input("Digite o celular atualizado do funcionário: ")
-                            dataCadF = input("Digite a data que o funcionario foi cadastrado atualizada: ")
-                            editar_funcionario(idf, nomeF, cpfF, EnderecoF, CelularF, dataCadF)
-                        elif opcao_funcionario == 4:
-                            idf = int(input("Digite o id do funcionario: "))
-                            excluir_funcionario(idf)
+                        elif opcao_funcionario == 3:                            
+                            editar_funcionario()
+                        elif opcao_funcionario == 4:                           
+                            excluir_funcionario()
                         elif opcao_funcionario == 0:
                             break
                         else:

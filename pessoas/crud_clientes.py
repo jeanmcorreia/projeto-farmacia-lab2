@@ -2,16 +2,21 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def criar_cliente(nome, cpf, endereco, celular, dataCadastro):
+def criar_cliente():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        nome = input("Digite o nome do cliente: ")
+        cpf = input("Digite o cpf do cliente: ")
+        endereco = input("Digite o endereço do cliente: ")
+        celular = input("Digite o numero de celular do cliente: ")
+        dataCadastro = input("Digite a data que o cliente está sendo cadastrado: ")
         cursor.execute("Select cpfcliente from \"Projeto\".cliente where cpfcliente = %s", (cpf,))
         cliente_existe = cursor.fetchone()
         if cliente_existe:
             print(f"O cliente de cpf '{cpf}' já existe")
             return False
-        else:
+        else:                     
             cursor.execute("INSERT INTO \"Projeto\".cliente(nomecliente, cpfcliente, enderecocliente, celularcliente, datacadastro) values(%s, %s, %s, %s, %s)", (nome, cpf, endereco, celular, dataCadastro))
             conexao.commit()
             print(f"Cliente criado com sucesso!")
@@ -40,10 +45,16 @@ def relatorio_clientes():
             cursor.close()
             conexao.close()
 
-def editar_cliente(id, nome, cpf, endereco, celular, dataCadastro):
+def editar_cliente():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        id = int(input("Digite o id do cliente: "))
+        nome = input("Digite o nome atualizado do cliente: ")
+        cpf = input("Digite o cpf atualizado do cliente: ")
+        endereco = input("Digite o endereço atualizado do cliente: ")
+        celular = input("Digite o numero de celular atualizado do cliente: ")
+        dataCadastro = input("Digite a data que o cliente foi cadastrado atualizada: ")
         cursor.execute("SELECT * FROM \"Projeto\".cliente where idCliente = %s", (id,))
         cliente_existe = cursor.fetchone()
         
@@ -65,10 +76,11 @@ def editar_cliente(id, nome, cpf, endereco, celular, dataCadastro):
             cursor.close()
             conexao.close()
 
-def excluir_cliente(idcliente):
+def excluir_cliente():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idcliente = int(input("Digite o id do cliente que deseja excluir: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o cliente {idcliente}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":

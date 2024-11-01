@@ -2,10 +2,14 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def gerar_estoque(idlote, idProduto, quantidade, validade):
+def gerar_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idlote = int(input("Digite o id do lote: "))
+        idProduto = int(input("Digite o id do produto contindo no lote: "))
+        quantidade = int(input("Digite a quantidade do produto contindo no lote: "))
+        validade = input("Digite a data de validade desse lote: ")
         cursor.execute("Select idproduto, idlote from \"Projeto\".detalhe_estoque where idproduto = %s and idLote = %s and validade = %s", (idProduto, idlote, validade))
         prodlote_existe = cursor.fetchone()
         if prodlote_existe:
@@ -41,10 +45,14 @@ def relatorio_estoque():
             cursor.close()
             conexao.close()
 
-def editar_estoque(idlote, idproduto, quantidade, validade):
+def editar_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idlote = int(input("Digite o id do lote: "))
+        idproduto = int(input("Digite o id atualizado do produto contindo no lote: "))
+        quantidade = int(input("Digite a quantidade atualizada do produto contindo no lote: "))
+        validade = input("Digite a data atualizada de validade desse lote: ")
         cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque where idLote = %s", (idlote,))
         lote_existe = cursor.fetchone()
         
@@ -66,10 +74,11 @@ def editar_estoque(idlote, idproduto, quantidade, validade):
             cursor.close()
             conexao.close()
 
-def excluir_lote(idlote):
+def excluir_lote():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idlote = int(input("Digite o id do lote: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o lote {idlote}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":

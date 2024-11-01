@@ -1,10 +1,14 @@
 import psycopg2
 from config.db import criar_conexao
 
-def criar_produto(nome, preco, categoria, tarja): #CREATE
+def criar_produto(): #CREATE
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        nome = input("Digite o nome do produto: ")
+        preco = input("digite o valor do produto: ")
+        categoria = input("Digite o id da categoria do produto: ")
+        tarja = input("Digite a tarja do produto(caso tenha): ")
         cursor.execute('SELECT * FROM \"Projeto\".categoria WHERE idcategoria = %s', (categoria,))
         categoria_existente = cursor.fetchone()
 
@@ -83,10 +87,15 @@ def relatorio_produtos(): #READ
             cursor.close()
             conexao.close()
 
-def atualizar_produto(idProduto, novo_nome, novo_preco, nova_categoria, nova_tarja): #UPDATE
+def atualizar_produto(): #UPDATE
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idProduto = int(input("Digite o id do produto: "))
+        novo_nome = input("Digite o nome do atualizado produto: ")
+        novo_preco = float(input("digite o valor atualizado do produto: "))
+        nova_categoria = input("Digite o id atualizado da categoria do produto: ")
+        nova_tarja = input("Digite a tarja atualizado do produto(caso tenha): ")
         cursor.execute('UPDATE \"Projeto\".produto SET nomeproduto = %s, preco = %s, idcategoria = %s, tarja = %s WHERE idproduto = %s', (novo_nome, novo_preco, nova_categoria, nova_tarja, idProduto))
         conexao.commit()
         print(f"Produto {idProduto} atualizado com sucesso!")
@@ -100,10 +109,11 @@ def atualizar_produto(idProduto, novo_nome, novo_preco, nova_categoria, nova_tar
             cursor.close()
             conexao.close()
 
-def excluir_produto(idProduto): #DELETE
+def excluir_produto(): #DELETE
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idProduto = int(input("Digite o id do produto: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o produto {idProduto}? (Isso excluirá o produto permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":

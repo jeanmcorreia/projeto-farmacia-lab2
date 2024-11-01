@@ -108,22 +108,14 @@ def menu_opcoes():
                     print("Digite um número inteiro válido.")
                     continue
                 if opcao_estoque == 1:
-                    idE = int(input("Digite o id do lote: "))
-                    idprodutoE = int(input("Digite o id do produto contindo no lote: "))
-                    quantidadeE = int(input("Digite a quantidade do produto contindo no lote: "))
-                    validadeE = input("Digite a data de validade desse lote: ")
-                    gerar_estoque(idE, idprodutoE, quantidadeE, validadeE)
+                    gerar_estoque()
                 elif opcao_estoque == 2:
                     relatorio_estoque()
-                elif opcao_estoque == 3:
-                    idE = int(input("Digite o id do lote: "))
-                    idprodutoE = int(input("Digite o id atualizado do produto contindo no lote: "))
-                    quantidadeE = int(input("Digite a quantidade atualizada do produto contindo no lote: "))
-                    validadeE = input("Digite a data atualizada de validade desse lote: ")
-                    editar_estoque(idE, idprodutoE, quantidadeE, validadeE)
+                elif opcao_estoque == 3:                   
+                    editar_estoque()
                 elif opcao_estoque == 4:
-                    idE = int(input("Digite o id do lote: "))
-                    excluir_lote(idE)
+                    
+                    excluir_lote()
                 elif opcao_estoque == 0:
                     break
                 else:
@@ -142,23 +134,13 @@ def menu_opcoes():
                     print("Digite um número inteiro válido.")
                     continue
                 if opcao_produto == 1:
-                    nomeP = input("Digite o nome do produto: ")
-                    precoP = input("digite o valor do produto: ")
-                    categoriaP = input("Digite o id da categoria do produto: ")
-                    tarjaP = input("Digite a tarja do produto(caso tenha): ")
-                    criar_produto(nomeP, precoP, categoriaP, tarjaP)
+                    criar_produto()
                 elif opcao_produto == 2:
                     relatorio_produtos()
                 elif opcao_produto == 3:
-                    idP = int(input("Digite o id do produto: "))
-                    nomeP = input("Digite o nome do atualizado produto: ")
-                    precoP = float(input("digite o valor atualizado do produto: "))
-                    categoriaP = input("Digite o id atualizado da categoria do produto: ")
-                    tarjaP = input("Digite a tarja atualizado do produto(caso tenha): ")
-                    atualizar_produto(idP, nomeP, precoP, categoriaP, tarjaP)
-                elif opcao_produto == 4:
-                    idP = int(input("Digite o id do produto: "))
-                    excluir_produto(idP)
+                    atualizar_produto()
+                elif opcao_produto == 4:                   
+                    excluir_produto()
                 elif opcao_produto == 0:
                     break
                 else:

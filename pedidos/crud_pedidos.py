@@ -2,10 +2,14 @@ from config.db import criar_conexao
 import psycopg2
 
 
-def gerar_pedido(cliente, funcionario, formadepgt, datapedido):
+def gerar_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cliente = int(input("Digite o id do cliente que fez o pedido: "))
+        funcionario = int(input("Digite o id do funcionario responsável pelo pedido: "))
+        formadepgt = input("digite a forma de pagamento: ")
+        datapedido = input("Digite a data que o pedido esta sendo efetuado: ")
         cursor.execute("INSERT INTO \"Projeto\".pedido (idcliente, idfuncionario, formapagamento, datapedido) VALUES (%s, %s, %s, %s)", (cliente, funcionario, formadepgt, datapedido))
         cursor.execute("SELECT idPedido FROM \"Projeto\".pedido ORDER BY idPedido DESC LIMIT 1")
         idpedido = cursor.fetchone()[0]
@@ -66,10 +70,15 @@ def relatorio_pedidos():
             cursor.close()
             conexao.close()
 
-def editar_pedido(idpedido, cliente, funcionario, formadepgt, valortotal, datapedido):
+def editar_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idpedido = int(input("Digite o id do pedido: "))
+        cliente = int(input("Digite o id atualizado do cliente que fez o pedido: "))
+        funcionario = int(input("Digite o nome atualizado do funcionario responsável pelo pedido: "))
+        formadepgt = input("digite a forma de pagamento atualizada: ")
+        datapedido = input("Digite a data atualizada que o pedido foi efetuado: ")
         cursor.execute("SELECT * FROM \"Projeto\".pedido where idPedido = %s", (idpedido,))
         pedido_existe = cursor.fetchone()
         
@@ -116,10 +125,11 @@ def editar_pedido(idpedido, cliente, funcionario, formadepgt, valortotal, datape
             #cursor.close()
             #conexao.close()
 
-def excluir_pedido(idpedido):
+def excluir_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        idpedido = int(input("Digite o id do pedido: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o pedido {idpedido}? (Isso o excluirá permanentemente!)\nS/N").upper()
 
         if confirmar_exclusao == "S":

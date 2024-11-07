@@ -159,24 +159,13 @@ def menu_opcoes():
                     print("Digite um número inteiro válido.")
                     continue
                 if opcao_pedido == 1:
-                    ClientePE = int(input("Digite o id do cliente que fez o pedido: "))
-                    FuncPe = int(input("Digite o id do funcionario responsável pelo pedido: "))
-                    FormadePgtPE = input("digite a forma de pagamento: ")
-                    DataPE = input("Digite a data que o pedido esta sendo efetuado: ")
-                    gerar_pedido(ClientePE, FuncPe, FormadePgtPE, DataPE)
+                    gerar_pedido()
                 elif opcao_pedido == 2:
                     relatorio_pedidos()
-                    
                 elif opcao_pedido == 3:
-                    idPE = int(input("Digite o id do pedido: "))
-                    ClientePE = int(input("Digite o id atualizado do cliente que fez o pedido: "))
-                    FuncPe = int(input("Digite o nome atualizado do funcionario responsável pelo pedido: "))
-                    FormadePgtPE = input("digite a forma de pagamento atualizada: ")
-                    DataPE = input("Digite a data atualizada que o pedido foi efetuado: ")
                     editar_pedido()
                 elif opcao_pedido == 4:
-                    idPE = int(input("Digite o id do pedido: "))
-                    excluir_pedido(idPE)
+                    excluir_pedido()
                 elif opcao_pedido == 0:
                     break
                 else:

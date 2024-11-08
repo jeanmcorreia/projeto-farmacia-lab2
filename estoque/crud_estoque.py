@@ -6,17 +6,16 @@ def gerar_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        idlote = int(input("Digite o id do lote: "))
         idProduto = int(input("Digite o id do produto contindo no lote: "))
         quantidade = int(input("Digite a quantidade do produto contindo no lote: "))
         validade = input("Digite a data de validade desse lote: ")
-        cursor.execute("Select idproduto, idlote from \"Projeto\".detalhe_estoque where idproduto = %s and idLote = %s and validade = %s", (idProduto, idlote, validade))
+        cursor.execute("Select idproduto, idlote from \"Projeto\".detalhe_estoque where idproduto = %s and validade = %s", (idProduto, validade))
         prodlote_existe = cursor.fetchone()
         if prodlote_existe:
-            print(F" O produto de id'{idProduto}' já existe no lote de id '{idlote}'")
+            print(F" o lote já existe ")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s, %s)", (idlote, idProduto, quantidade, validade))
+            cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s)", (idProduto, quantidade, validade))
             conexao.commit()
             print(f"Estoque gerado com sucesso!")
             return True

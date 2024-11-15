@@ -1,4 +1,4 @@
-from src.views.first_view import introduction_page
+from src.views.login_view import introduction_page
 
 def introduction_process():
     command = introduction_page()

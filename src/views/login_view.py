@@ -1,4 +1,4 @@
-def introduction_page():
+def login_page():
     message = '''
         Bem-vindo!
         

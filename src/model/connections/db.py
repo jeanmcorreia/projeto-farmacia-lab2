@@ -1,11 +1,6 @@
 import psycopg2
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-
-
-def criar_conexao():
+def create_connection():
     try:
         conn = psycopg2.connect(
             dbname= 'postgres',
@@ -19,4 +14,5 @@ def criar_conexao():
     except Exception as e:
         print(f"Erro ao conectar com o banco de dados: {e}")
         return None
-criar_conexao()
+    
+create_connection()

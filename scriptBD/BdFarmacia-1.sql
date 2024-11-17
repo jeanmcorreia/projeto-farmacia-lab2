@@ -81,7 +81,7 @@ SELECT * from funcionario
 
 drop table detalhe_estoque
 create table detalhe_estoque (
-idLote int,
+idLote serial primary key,
 idProduto int not null references produto(idProduto),
 quantidade int not null,
 validade date not null

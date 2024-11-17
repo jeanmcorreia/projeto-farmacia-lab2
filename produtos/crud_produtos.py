@@ -1,14 +1,22 @@
 import psycopg2
 from config.db import criar_conexao
 
-def criar_produto(): #CREATE
+def criar_produto(): 
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
         nome = input("Digite o nome do produto: ")
         preco = input("digite o valor do produto: ")
+        cursor.execute("select idcategoria, descricao from \"Projeto\".categoria")
+        lista_categorias = cursor.fetchall()
+        for idcategoria, descricao in lista_categorias:
+            print(f"ID: {idcategoria} | Nome: {descricao}")
         categoria = input("Digite o id da categoria do produto: ")
-        tarja = input("Digite a tarja do produto(caso tenha): ")
+        cursor.execute("select idcategoria from \"Projeto\".categoria where idcategoria = %s",(categoria,))
+        categoria_existe = cursor.fetchone()
+        if not categoria_existe:
+            print("Categoria não existe, operação cancelada.")
+            return False
         cursor.execute('SELECT * FROM \"Projeto\".categoria WHERE idcategoria = %s', (categoria,))
         categoria_existente = cursor.fetchone()
 
@@ -71,13 +79,15 @@ def criar_produto(): #CREATE
             cursor.close()
             conexao.close()
 
-def relatorio_produtos(): #READ
+def relatorio_produtos(): 
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM \"Projeto\".produto')
-        relatorio = cursor.fetchall()
-        print(relatorio)
+        cursor.execute("Select idproduto, nomeproduto from \"Projeto\".produto ")
+        listaprod = cursor.fetchall()
+        print("Produtos disponíveis:")
+        for idproduto, nomeproduto in listaprod:
+            print(f"ID: {idproduto} | Nome: {nomeproduto}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -87,7 +97,7 @@ def relatorio_produtos(): #READ
             cursor.close()
             conexao.close()
 
-def atualizar_produto(): #UPDATE
+def atualizar_produto():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
@@ -109,7 +119,7 @@ def atualizar_produto(): #UPDATE
             cursor.close()
             conexao.close()
 
-def excluir_produto(): #DELETE
+def excluir_produto():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()

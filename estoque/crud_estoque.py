@@ -6,7 +6,17 @@ def gerar_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idproduto, nomeproduto from \"Projeto\".produto ")
+        listaprod = cursor.fetchall()
+        print("Produtos disponíveis:")
+        for idproduto, nomeproduto in listaprod:
+            print(f"ID: {idproduto} | Nome: {nomeproduto}")
         idProduto = int(input("Digite o id do produto contindo no lote: "))
+        cursor.execute("Select idproduto from \"Projeto\".produto where idproduto = %s ",(idProduto,))
+        prod_existe = cursor.fetchone()
+        if not prod_existe:
+             print("Produto não encontrado. Operação cancelada.")
+             return False
         quantidade = int(input("Digite a quantidade do produto contindo no lote: "))
         validade = input("Digite a data de validade desse lote: ")
         cursor.execute("Select idproduto, idlote from \"Projeto\".detalhe_estoque where idproduto = %s and validade = %s", (idProduto, validade))
@@ -32,9 +42,11 @@ def relatorio_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque")
-        relatorio = cursor.fetchall()
-        print(relatorio)
+        cursor.execute("Select idlote, validade from \"Projeto\".detalhe_estoque")
+        relatorio_lote = cursor.fetchall()
+        print("Estoque:")
+        for idlote, validade in relatorio_lote:
+            print(f"ID: {idlote} | Nome: {validade}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")

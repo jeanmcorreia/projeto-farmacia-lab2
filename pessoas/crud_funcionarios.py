@@ -33,9 +33,11 @@ def relatorio_funcionarios():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".funcionario")
-        relatorio = cursor.fetchall()
-        print(relatorio)
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario ")
+        relatorio_funcionario = cursor.fetchall()
+        print("Funcionarios:")
+        for idfuncionario, nomefuncionario in relatorio_funcionario:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")

@@ -6,8 +6,31 @@ def gerar_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+
+        cursor.execute("Select idcliente, nomecliente from \"Projeto\".cliente")
+        listacliente = cursor.fetchall()
+        print("Clientes Registrados:")
+        for idcliente, nomecliente in listacliente:
+            print(f"ID: {idcliente} | Nome: {nomecliente}")
         cliente = int(input("Digite o id do cliente que fez o pedido: "))
+        cursor.execute("Select idcliente from \"Projeto\".cliente where idcliente = %s ",(cliente,))
+        cliente_existe = cursor.fetchone()
+        if not cliente_existe:
+             print("Cliente não encontrado. Operação cancelada.")
+             return False
+        
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario")
+        listaFunc = cursor.fetchall()
+        print("Funcionarios Registrados:")
+        for idfuncionario, nomefuncionario in listaFunc:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         funcionario = int(input("Digite o id do funcionario responsável pelo pedido: "))
+        cursor.execute("Select idfuncionario from \"Projeto\".funcionario where idfuncionario = %s ",(funcionario,))
+        Func_existe = cursor.fetchone()
+        if not Func_existe:
+             print("Funcionário não encontrado. Operação cancelada.")
+             return False
+        
         formadepgt = input("digite a forma de pagamento: ")
         datapedido = input("Digite a data que o pedido esta sendo efetuado: ")
         cursor.execute("INSERT INTO \"Projeto\".pedido (idcliente, idfuncionario, formapagamento, datapedido) VALUES (%s, %s, %s, %s)", (cliente, funcionario, formadepgt, datapedido))
@@ -58,9 +81,11 @@ def relatorio_pedidos():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("SELECT * FROM \"Projeto\".pedido")
-        relatorio = cursor.fetchall()
-        print(relatorio)
+        cursor.execute("Select dp.iddetalhep, pe.idcliente, c.nomecliente, dp.idproduto, p.nomeproduto, dp.quantidade from \"Projeto\".tbl_detalhe_pedidos dp inner join \"Projeto\".pedido pe ON pe.idpedido = dp.idpedido inner join \"Projeto\".produto p ON p.idproduto  = dp.idproduto inner join \"Projeto\".cliente c ON c.idcliente = pe.idcliente")
+        lista_pedidos = cursor.fetchall()
+        print("Pedidos:")
+        for dp.iddetalhep, pe.idcliente, c.nomecliente, dp.idproduto, p.nomeproduto, dp.quantidade in lista_pedidos:
+            print(f"ID: {dp.iddetalhep} | CLIENTE: {pe.idcliente} - {c.nomecliente} | PRODUTO: {dp.idproduto} - {p.nomeproduto} | QTD: {dp.quantidade}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")

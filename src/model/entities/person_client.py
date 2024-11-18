@@ -1,4 +1,4 @@
-class PeopleClient:
+class PersonClient:
     def __init__(self, client_id: int, client_name: str, client_cpf: int, client_address: str, client_telephone: int, client_registration_date):
         self.client_id = client_id
         self.client_name = client_name

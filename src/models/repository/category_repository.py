@@ -1,5 +1,5 @@
-from src.model.entities.category import Category
-from src.model.connections.db import create_connection
+from src.models.entities.category import Category
+from src.models.connections.db import create_connection
 
 class CategoryRepository:
     def __init__(self):

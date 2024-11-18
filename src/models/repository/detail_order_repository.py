@@ -1,5 +1,5 @@
-from src.model.entities.detail_order import DetailOrder
-from src.model.connections.db import create_connection
+from src.models.entities.detail_order import DetailOrder
+from src.models.connections.db import create_connection
 
 class DetailOrderRepository:
     def __init__(self):

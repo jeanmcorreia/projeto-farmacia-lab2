@@ -1,5 +1,5 @@
-from src.model.entities.products import Product
-from src.model.connections.db import create_connection
+from src.models.entities.products import Product
+from src.models.connections.db import create_connection
 
 class ProductRepository:
     def __init__(self):

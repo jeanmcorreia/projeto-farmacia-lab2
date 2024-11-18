@@ -1,5 +1,5 @@
-from src.model.connections.db import create_connection
-from src.model.entities.person_employee import PersonEmployee
+from src.models.connections.db import create_connection
+from src.models.entities.person_employee import PersonEmployee
 
 class PersonEmployeeRepository:
     def __init__(self):

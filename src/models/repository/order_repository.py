@@ -1,5 +1,5 @@
-from src.model.entities.order import Order
-from src.model.connections.db import create_connection
+from src.models.entities.order import Order
+from src.models.connections.db import create_connection
 
 class OrderRepository:
     def __init__(self):

@@ -1,5 +1,5 @@
-from src.model.entities.person_client import PersonClient
-from src.model.connections.db import create_connection
+from src.models.entities.person_client import PersonClient
+from src.models.connections.db import create_connection
 
 class PersonClientRepository:
     def __init__(self):

@@ -15,4 +15,10 @@ def create_connection():
         print(f"Erro ao conectar com o banco de dados: {e}")
         return None
     
-create_connection()
+# Teste da conexão
+if __name__ == "__main__":
+    connection = create_connection()
+    if connection:
+        connection.close()
+        print("Conexão fechada com sucesso.")
+#SUCESSO

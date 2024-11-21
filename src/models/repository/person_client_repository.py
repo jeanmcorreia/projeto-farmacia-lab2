@@ -12,7 +12,7 @@ class PersonClientRepository:
         rows = cursor.fetchall()
         cursor.close()
 
-        clients = [PersonClient(*row) for row in rows]
+        clients = [PersonClient(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return clients
     
     def find_client_by_id(self, client_id):
@@ -22,7 +22,11 @@ class PersonClientRepository:
         row = cursor.fetchone()
         cursor.close()
 
-        return PersonClient(*row) if row else None
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return PersonClient(*row_sorted)
+        else:
+            return None
     
     def registry_client(self, client):
         query = '''

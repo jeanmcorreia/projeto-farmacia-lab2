@@ -12,7 +12,7 @@ class ProductRepository:
         rows = cursor.fetchall()
         cursor.close()
 
-        products = [Product(*row) for row in rows]
+        products = [Product(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return products
     
     def find_product_by_id(self, product_id):
@@ -21,8 +21,12 @@ class ProductRepository:
         cursor.execute(query, (product_id,))
         row = cursor.fetchone()
         cursor.close()
-
-        return Product(*row) if row else None
+        
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return Product(*row_sorted)
+        else:
+            return None
     
     def create_product(self, product):
         query = '''

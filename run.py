@@ -11,7 +11,7 @@ for emp in employees:
 
 # Teste 2: Encontrar funcionário por ID
 print("\n----- Buscar Funcionário por ID -----")
-employee_id = 1
+employee_id = 2
 employee = repository.find_employee_by_id(employee_id)
 if employee:
     print(vars(employee))
@@ -43,7 +43,4 @@ if employee_to_update:
 else:
     print(f"Funcionário com ID {employee_id} não encontrado para atualizar.")
 
-# Teste 5: Deletar funcionário
-print("\n----- Deletar Funcionário -----")
-repository.delete_employee(employee_id)
-print(f"Funcionário com ID {employee_id} deletado!")
+

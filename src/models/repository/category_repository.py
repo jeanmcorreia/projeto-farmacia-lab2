@@ -12,7 +12,7 @@ class CategoryRepository:
         rows = cursor.fetchall()
         cursor.close()
         
-        categories = [Category(*row) for row in rows]
+        categories = [Category(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return categories
     
     def find_category_by_id(self, category_id):
@@ -21,8 +21,12 @@ class CategoryRepository:
         cursor.execute(query, (category_id,))
         row = cursor.fetchone()
         cursor.close()
-
-        return Category(*row) if row else None
+        
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return Category(*row_sorted)
+        else:
+            return None
     
     def registry_category(self, category):
         query = '''

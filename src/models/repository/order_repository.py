@@ -12,7 +12,7 @@ class OrderRepository:
         rows = cursor.fetchall()
         cursor.close()
 
-        orders = [Order(*row) for row in rows]
+        orders = [Order(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return orders
     
     def find_order_by_id(self, order_id):
@@ -22,7 +22,11 @@ class OrderRepository:
         row = cursor.fetchone()
         cursor.close()
 
-        return Order(*row) if row else None
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return Order(*row_sorted)
+        else:
+            return None
     
     def registry_order(self, order):
         query = '''

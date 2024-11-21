@@ -11,8 +11,8 @@ class PersonEmployeeRepository:
         cursor.execute(query)
         rows = cursor.fetchall()
         cursor.close()
-
-        employees = [PersonEmployee(*row) for row in rows]
+        
+        employees = [PersonEmployee(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return employees
     
     def find_employee_by_id(self, employee_id):
@@ -22,7 +22,11 @@ class PersonEmployeeRepository:
         row = cursor.fetchone()
         cursor.close()
 
-        return PersonEmployee(*row) if row else None
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return PersonEmployee(*row_sorted)
+        else:
+            return None
     
     def registry_employee(self, employee):
         query = '''

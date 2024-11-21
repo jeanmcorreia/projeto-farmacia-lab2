@@ -12,18 +12,21 @@ class DetailOrderRepository:
         rows = cursor.fetchall()
         cursor.close()
 
-        details_orders = [DetailOrder(*row) for row in rows]
+        details_orders = [DetailOrder(*[row[i] for i in [1, 2, 3, 4, 5, 6, 7, 0]]) for row in rows]
         return details_orders
     
     def find_details_orders_by_order_id(self, order_id):
         query = 'SELECT * FROM \"pharma\".details_orders WHERE order_id = %s'
         cursor = self.connection.cursor()
         cursor.execute(query, (order_id,))
-        rows = cursor.fetchall()
+        row = cursor.fetchone()
         cursor.close()
 
-        details_orders = [DetailOrder(*row) for row in rows]
-        return details_orders
+        if row:
+            row_sorted = (row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[0])  
+            return DetailOrder(*row_sorted)
+        else:
+            return None
     
     def add_detail_order(self, detail_order):
         query = '''

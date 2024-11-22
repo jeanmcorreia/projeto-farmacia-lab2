@@ -191,25 +191,20 @@ def main():
                 continue  
 
         if OpcEnter == 2:  
-            Login = input("Digite seu user: ")
-            Senha = input("Digite sua senha: ")
-            while not cadastrar(Login, Senha):
+            if not cadastrar():
                 print("Erro ao cadastrar. Tente novamente.")
-                Login = input("Digite o user desejado: ")
-                Senha = input("Digite a senha desejada: ")
-            print("Cadastro realizado com sucesso!")
-            print("Voltando para a tela de login...")
-            continue  
+                continue
+            else:
+                break
+                
 
         elif OpcEnter == 1:  
-            Login = input("Digite seu user: ")
-            Senha = input("Digite sua senha: ")
-            while not autenticar(Login, Senha):
+            if not autenticar():
                 print("Usuário ou senha incorretos. Tente novamente.")
-                Login = input("Digite seu user: ")
-                Senha = input("Digite sua senha: ")
-            print("Login realizado com sucesso!")
-            break
+                continue
+            else:
+                break
+                  
     menu_opcoes()
 
 if __name__ == "__main__":

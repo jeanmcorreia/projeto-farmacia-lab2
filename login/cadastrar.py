@@ -1,17 +1,20 @@
 import psycopg2
 from config.db import criar_conexao
-from login.autenticar import autenticar
 
-def cadastrar(Login,Senha):
+
+def cadastrar():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        Login = input("Digite o seu login: ")
+        Senha = input("Digite sua senha: ")
+        query = "SELECT usuario, password FROM \"Projeto\".usuario where usuario = %s or password = %s"
+        cursor.execute(query,(Login, Senha))  
+        usuario_existe = cursor.fetchone()
         
-        
-        if autenticar(Login, Senha):
+        if usuario_existe:
             print("Falha no cadastro, usuario e/ou senha já existem.")
             return False  
-    
         else:
             cursor.execute("INSERT INTO \"Projeto\".usuario (Usuario, Password) VALUES (%s, %s)", (Login, Senha))
             print("Cadastro realizado com sucesso.")

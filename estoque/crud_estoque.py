@@ -25,7 +25,7 @@ def gerar_estoque():
             print(F" o lote já existe ")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque values(%s, %s, %s)", (idProduto, quantidade, validade))
+            cursor.execute("INSERT INTO \"Projeto\".detalhe_estoque(idProduto, quantidade, validade) values(%s, %s, %s)", (idProduto, quantidade, validade))
             conexao.commit()
             print(f"Estoque gerado com sucesso!")
             return True

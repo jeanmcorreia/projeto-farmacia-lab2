@@ -2,11 +2,13 @@ from config.db import criar_conexao
 import psycopg2  
 
 
-def autenticar(login, senha):
+def autenticar():
     try:
        
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        login = input("Digite o seu login: ")
+        senha = input("Digite sua senha: ")
         cursor.execute("SELECT usuario, password FROM \"Projeto\".usuario")  
 
         

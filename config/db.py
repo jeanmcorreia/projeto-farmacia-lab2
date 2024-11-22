@@ -1,8 +1,7 @@
 import psycopg2
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
+
+
 
 
 def criar_conexao():
@@ -10,8 +9,8 @@ def criar_conexao():
         conn = psycopg2.connect(
             dbname= 'postgres',
             user= 'postgres',
-            password= '021122',
-            host= '127.0.0.1',
+            password= 'Kako021122',
+            host= 'localhost',
             port= '5432'
         )
         

@@ -38,6 +38,10 @@ def gerar_pedido():
         idpedido = cursor.fetchone()[0]
 
         while True:
+            cursor.execute("Select idproduto, nomeproduto, preco from \"Projeto\".produto")
+            lista_produtos = cursor.fetchall()
+            for idproduto, nomeproduto, preco in lista_produtos:
+                print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco}")
             idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
             if idproduto == 0:
                 break
@@ -46,13 +50,7 @@ def gerar_pedido():
             produto_existe = cursor.fetchone()
             
             if produto_existe:
-                quantidade = input(f"Digite a quantidade do produto: ")
-                
-                try:
-                    quantidade = int(quantidade)
-                except ValueError:
-                    print("Por favor, digite um número válido para a quantidade.")
-                    continue
+                quantidade = int(input(f"Digite a quantidade do produto: "))
                 
                 cursor.execute("SELECT quantidade FROM \"Projeto\".detalhe_estoque WHERE idProduto = %s", (idproduto,))
                 estoque = cursor.fetchone()
@@ -84,8 +82,8 @@ def relatorio_pedidos():
         cursor.execute("Select dp.iddetalhep, pe.idcliente, c.nomecliente, dp.idproduto, p.nomeproduto, dp.quantidade from \"Projeto\".tbl_detalhe_pedidos dp inner join \"Projeto\".pedido pe ON pe.idpedido = dp.idpedido inner join \"Projeto\".produto p ON p.idproduto  = dp.idproduto inner join \"Projeto\".cliente c ON c.idcliente = pe.idcliente")
         lista_pedidos = cursor.fetchall()
         print("Pedidos:")
-        for dp.iddetalhep, pe.idcliente, c.nomecliente, dp.idproduto, p.nomeproduto, dp.quantidade in lista_pedidos:
-            print(f"ID: {dp.iddetalhep} | CLIENTE: {pe.idcliente} - {c.nomecliente} | PRODUTO: {dp.idproduto} - {p.nomeproduto} | QTD: {dp.quantidade}")
+        for iddetalhep, idcliente, nomecliente, idproduto, nomeproduto, quantidade in lista_pedidos:
+            print(f"ID: {iddetalhep} | CLIENTE: {idcliente} - {nomecliente} | PRODUTO: {idproduto} - {nomeproduto} | QTD: {quantidade}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")

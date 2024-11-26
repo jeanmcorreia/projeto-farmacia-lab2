@@ -6,9 +6,10 @@ def cadastrar():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        Login = input("Digite o seu login: ")
+        Login = input("Digite o seu nome de usuário: ")
         Senha = input("Digite sua senha: ")
-        query = "SELECT usuario, password FROM \"Projeto\".usuario where usuario = %s or password = %s"
+        Nome =  input("Digite o seu nome completo: ")
+        query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario where usuarioFuncionario = %s or SenhaFuncionario = %s"
         cursor.execute(query,(Login, Senha))  
         usuario_existe = cursor.fetchone()
         
@@ -16,7 +17,7 @@ def cadastrar():
             print("Falha no cadastro, usuario e/ou senha já existem.")
             return False  
         else:
-            cursor.execute("INSERT INTO \"Projeto\".usuario (Usuario, Password) VALUES (%s, %s)", (Login, Senha))
+            cursor.execute("INSERT INTO \"Projeto\".Funcionario (nomeFuncionario, usuarioFuncionario, SenhaFuncionario, NivelPermissao) VALUES (%s, %s, %s, %s)", (Nome, Login, Senha,'1'))
             print("Cadastro realizado com sucesso.")
             conexao.commit()
             return True

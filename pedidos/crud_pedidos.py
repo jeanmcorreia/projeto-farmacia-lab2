@@ -123,30 +123,6 @@ def editar_pedido():
             cursor.close()
             conexao.close()
 
-#def editar_produto_pedido(idpedido, idproduto, quantidade):
-    #try:
-        #conexao = criar_conexao()
-        #cursor = conexao.cursor()
-        #cursor.execute("SELECT * FROM \"Projeto\".tbl_detalhe_pedido where idPedido = %s and idProduto = %s", idpedido, idproduto)
-        #pedido_produto_existe = cursor.fetchone()
-        
-        #if pedido_produto_existe:
-            #cursor.execute("UPDATE \"Projeto\".tbl_detalhe_pedido SET quantidade = %s", quantidade)
-            #conexao.commit()
-            #print(f"Pedido {idpedido} alterado com sucesso.")
-            #return True
-            
-        #else:
-            #print("Falha na alteração, lote não existe")
-            #return False 
-         
-    #except (Exception, psycopg2.DatabaseError) as error:
-        #print(f"Erro ao acessar o banco de dados: {error}")
-        #return False
-        
-    #finally:
-            #cursor.close()
-            #conexao.close()
 
 def excluir_pedido():
     try:

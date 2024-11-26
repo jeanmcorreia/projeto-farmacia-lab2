@@ -9,12 +9,12 @@ def autenticar():
         cursor = conexao.cursor()
         login = input("Digite o seu login: ")
         senha = input("Digite sua senha: ")
-        cursor.execute("SELECT usuario, password FROM \"Projeto\".usuario")  
+        cursor.execute("SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".funcionario")  
 
         
         for row in cursor.fetchall():
-            usuario, password = row
-            if usuario == login and password == senha:
+            usuarioFuncionario, SenhaFuncionario = row
+            if usuarioFuncionario == login and SenhaFuncionario == senha:
                 return True  
 
     except (Exception, psycopg2.DatabaseError) as error:

@@ -7,43 +7,40 @@ enderecoCliente varchar(80),
 celularCliente char(11), 
 dataCadastro date 
 ); 
-select * from cliente
-select * from tbl_detalhe_pedidos tdp 
-select * from pedido
-select * from funcionario 
-select * from detalhe_estoque 
-select * from produto 
-
+drop table funcionario 
 create table funcionario 
 ( 
 idFuncionario serial primary key, 
-nomeFuncionario varchar(60) not null, 
+nomeFuncionario varchar(60) not null,
+UsuarioFuncionario varchar(60) not null, 
 cpfFuncionario char(12), 
 enderecoFuncionario varchar(80), 
-celularFuncionario char(11), 
+celularFuncionario char(11),
+SenhaFuncionario varchar(60) not null,
+NivelPermissao char(1) not null,
 admissao date 
 );
-SELECT * FROM funcionario
 
-drop table usuario 
+
+insert into categoria(Descricao, obs) values ('laticinios', 'derivados da vaca')
 create table usuario
 ( 
 Usuario varchar(80) unique not null, 
 Password varchar(80) unique not null 
 );
 
-SELECT usuario, password from usuario
 
-drop table categoria cascade
+
+
 create table categoria
 ( 
 idCategoria serial primary key, 
 Descricao varchar(80), 
 obs varchar(200) 
 )
-select * from produto p 
 
 
+select * from tbl_detalhe_pedidos tdp 
 create table produto 
 ( 
 idProduto serial primary key, 
@@ -52,9 +49,10 @@ nomeProduto varchar(60) not null,
 preco numeric(10,2) not null, 
 tarja varchar(60) 
 ); 
-drop table produto cascade
+insert into produto (idcategoria , nomeproduto, preco, tarja) values (1, 'leite', 10, 'N/A')
 
-drop table pedido cascade
+
+
 create table pedido 
 ( 
 idPedido serial primary key, 
@@ -65,26 +63,22 @@ valorTotal numeric(10,2),
 dataPedido date
 )
 
-drop table tbl_detalhe_pedidos 
+
 create table tbl_detalhe_pedidos(
 	iddetalheP serial primary key,
 	idPedido int not null references pedido(idPedido), 
 	idProduto int not null references produto(idProduto),
 	quantidade int not null
 );
-select * from produto 
-select * from detalhe_estoque
-select * from tbl_detalhe_pedidos 
-select * from pedido 
-SELECT * FROM cliente 
-SELECT * from funcionario 
 
-drop table detalhe_estoque
+
+drop table detalhe_estoque 
 create table detalhe_estoque (
 idLote serial primary key,
 idProduto int not null references produto(idProduto),
 quantidade int not null,
 validade date not null
 )
-select * from detalhe_estoque
-select * from usuario
+
+select * from tbl_detalhe_pedidos tdp 
+select * from pedido p

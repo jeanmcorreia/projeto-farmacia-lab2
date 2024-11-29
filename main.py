@@ -6,6 +6,7 @@ from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios,
 from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
 from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
 from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido
+from validação.validar_acesso import validar_acesso
 
 
 
@@ -53,7 +54,11 @@ def menu_opcoes():
                             print("Digite um número inteiro válido.")
                             continue
                         if opcao_cliente == 1:
-                            criar_cliente()
+                            if validar_acesso() == 1:
+                                criar_cliente()
+                            else:
+                                print("você não tem permissõa para realizar essa ação")
+                                continue
                         elif opcao_cliente == 2:   
                             relatorio_clientes()
                         elif opcao_cliente == 3:
@@ -195,7 +200,7 @@ def main():
                 print("Erro ao cadastrar. Tente novamente.")
                 continue
             else:
-                break
+                continue
                 
 
         elif OpcEnter == 1:  

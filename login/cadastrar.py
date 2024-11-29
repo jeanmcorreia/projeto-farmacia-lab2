@@ -17,7 +17,7 @@ def cadastrar():
             print("Falha no cadastro, usuario e/ou senha já existem.")
             return False  
         else:
-            cursor.execute("INSERT INTO \"Projeto\".Funcionario (nomeFuncionario, usuarioFuncionario, SenhaFuncionario, NivelPermissao) VALUES (%s, %s, %s, %s)", (Nome, Login, Senha,'1'))
+            cursor.execute("INSERT INTO \"Projeto\".Funcionario (nomeFuncionario, usuarioFuncionario, SenhaFuncionario, NivelPermissao) VALUES (%s, %s, %s, %s)", (Nome, Login, Senha,'2'))
             print("Cadastro realizado com sucesso.")
             conexao.commit()
             return True

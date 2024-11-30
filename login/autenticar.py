@@ -1,38 +1,38 @@
+import psycopg2
 from config.db import criar_conexao
-import psycopg2  
 
+login = None
+senha = None
+autenticado = False
 
 def autenticar():
+    global login, senha, autenticado
     try:
-       
-        conexao = criar_conexao()
-        cursor = conexao.cursor()
-        login = input("Digite o seu login: ")
-        senha = input("Digite sua senha: ")
-        cursor.execute("SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".funcionario")  
-
         
-        for row in cursor.fetchall():
-            usuarioFuncionario, SenhaFuncionario = row
-            if usuarioFuncionario == login and SenhaFuncionario == senha:
-                return True  
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(f"Erro ao acessar o banco de dados: {error}")
-
+        if not autenticado:
+            
+            login = input("Digite o login: ")
+            senha = input("Digite a senha: ")
+            
+            conexao = criar_conexao()
+            cursor = conexao.cursor()
+            query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario where usuarioFuncionario = %s and SenhaFuncionario = %s"
+            cursor.execute(query,(login, senha))
+            user_existe = cursor.fetchone()
+            if user_existe:
+                autenticado = True  
+                return login, senha, autenticado 
+            else:
+                return False
+    except Exception as error:
+        print(f'Erro ao acessar o banco de dados {error}')
     finally:
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
+    
         
-        try:
-            cursor.close()  
-        except:
-            pass  
-
-        try:
-            conexao.close()  
-        except:
-            pass  
-
-    return False  
           
             
     

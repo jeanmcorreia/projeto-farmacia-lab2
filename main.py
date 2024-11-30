@@ -54,7 +54,7 @@ def menu_opcoes():
                             print("Digite um número inteiro válido.")
                             continue
                         if opcao_cliente == 1:
-                            if validar_acesso() == 1:
+                            if validar_acesso() == '1':
                                 criar_cliente()
                             else:
                                 print("você não tem permissõa para realizar essa ação")

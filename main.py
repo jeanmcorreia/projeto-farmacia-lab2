@@ -4,7 +4,7 @@ from login.cadastrar import cadastrar
 from pessoas.crud_clientes import criar_cliente, relatorio_clientes, editar_cliente, excluir_cliente
 from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios, editar_funcionario, excluir_funcionario
 from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
-from estoque.crud_estoque import gerar_estoque, relatorio_estoque, editar_estoque, excluir_lote
+from estoque.crud_estoque import relatorio_estoque, editar_estoque
 from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido
 from validação.validar_acesso import validar_acesso
 
@@ -102,10 +102,8 @@ def menu_opcoes():
         elif opcao == 2:
             while True:
                 print("\nEscolha uma opção:")
-                print("1 - Gerar estoque")
+                print("1 - Editar estoque")
                 print("2 - Relatório estoque")
-                print("3 - Editar estoque")
-                print("4 - Excluir estoque")
                 print("0 - Voltar")
                 try:
                     opcao_estoque = int(input("Digite a opção desejada: "))
@@ -113,14 +111,9 @@ def menu_opcoes():
                     print("Digite um número inteiro válido.")
                     continue
                 if opcao_estoque == 1:
-                    gerar_estoque()
+                    editar_estoque()
                 elif opcao_estoque == 2:
                     relatorio_estoque()
-                elif opcao_estoque == 3:                   
-                    editar_estoque()
-                elif opcao_estoque == 4:
-                    
-                    excluir_lote()
                 elif opcao_estoque == 0:
                     break
                 else:

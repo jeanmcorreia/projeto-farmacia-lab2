@@ -38,30 +38,30 @@ def gerar_pedido():
         idpedido = cursor.fetchone()[0]
 
         while True:
-            cursor.execute("Select idproduto, nomeproduto, preco from \"Projeto\".produto")
+            cursor.execute("Select idproduto, nomeproduto, preco, quantidade from \"Projeto\".produto")
             lista_produtos = cursor.fetchall()
-            for idproduto, nomeproduto, preco in lista_produtos:
-                print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco}")
+            for idproduto, nomeproduto, preco, quantidade in lista_produtos:
+                print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco} | Quantidade: {quantidade}")
             idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
             if idproduto == 0:
                 break
             
-            cursor.execute("SELECT * FROM \"Projeto\".detalhe_estoque WHERE idProduto = %s", (idproduto,))
+            cursor.execute("SELECT * FROM \"Projeto\".produto WHERE idProduto = %s", (idproduto,))
             produto_existe = cursor.fetchone()
             
             if produto_existe:
                 quantidade = int(input(f"Digite a quantidade do produto: "))
                 
-                cursor.execute("SELECT quantidade FROM \"Projeto\".detalhe_estoque WHERE idProduto = %s", (idproduto,))
+                cursor.execute("SELECT quantidade FROM \"Projeto\".produto WHERE idProduto = %s", (idproduto,))
                 estoque = cursor.fetchone()
                 
                 if estoque and estoque[0] >= quantidade:
                     cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
-                    cursor.execute("UPDATE \"Projeto\".detalhe_estoque SET quantidade = quantidade - %s WHERE idproduto = %s", (quantidade, idproduto))
+                    cursor.execute("UPDATE \"Projeto\".produto SET quantidade = quantidade - %s WHERE idproduto = %s", (quantidade, idproduto))
                 else:
                     print(f"Quantidade solicitada ({quantidade}) não disponível em estoque.")
 
-        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(preco * quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)", (idpedido,))
+        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(p.preco * dp.quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)", (idpedido,))
         
         conexao.commit()
         print("Pedido gerado com sucesso e produtos adicionados!")

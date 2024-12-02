@@ -5,7 +5,7 @@ from pessoas.crud_clientes import criar_cliente, relatorio_clientes, editar_clie
 from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios, editar_funcionario, excluir_funcionario
 from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
 from estoque.crud_estoque import relatorio_estoque, editar_estoque
-from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido
+from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido, econtrar_por_nome
 from validação.validar_acesso import validar_acesso
 
 
@@ -150,6 +150,7 @@ def menu_opcoes():
                 print("2 - Relatório pedidos")
                 print("3 - Editar pedido")
                 print("4 - Excluir pedido")
+                print("5 - Achar pedido por nome de cliente")
                 print("0 - Voltar")
                 try:
                     opcao_pedido = int(input("Digite a opção desejada: "))
@@ -164,6 +165,8 @@ def menu_opcoes():
                     editar_pedido()
                 elif opcao_pedido == 4:
                     excluir_pedido()
+                elif opcao_pedido == 5:
+                    econtrar_por_nome()
                 elif opcao_pedido == 0:
                     break
                 else:

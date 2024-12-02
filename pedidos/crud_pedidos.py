@@ -47,6 +47,7 @@ def gerar_pedido():
         while True:
             cursor.execute("Select idproduto, nomeproduto, preco, quantidade from \"Projeto\".produto")
             lista_produtos = cursor.fetchall()
+            print("Produtos Registrados:")
             for idproduto, nomeproduto, preco, quantidade in lista_produtos:
                 print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco} | Quantidade: {quantidade}")
             idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
@@ -111,8 +112,26 @@ def editar_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+
+        cursor.execute("Select p.idpedido, p.idcliente, c.nomecliente from \"Projeto\".pedido p inner join \"Projeto\".cliente c ON p.idcliente = c.idcliente")
+        lista_pedido = cursor.fetchall()
+        print("Pedidos Registrados:")
+        for idpedido, idcliente, nomecliente in lista_pedido:
+            print(f"ID: {idpedido} | CLIENTE: {idcliente} - {nomecliente}")
         idpedido = int(input("Digite o id do pedido: "))
+        
+        cursor.execute("Select idcliente, nomecliente from \"Projeto\".cliente")
+        listacliente = cursor.fetchall()
+        print("Clientes Registrados:")
+        for idcliente, nomecliente in listacliente:
+            print(f"ID: {idcliente} | Nome: {nomecliente}")
         cliente = int(input("Digite o id atualizado do cliente que fez o pedido: "))
+
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario")
+        listaFunc = cursor.fetchall()
+        print("Funcionarios Registrados:")
+        for idfuncionario, nomefuncionario in listaFunc:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         funcionario = int(input("Digite o nome atualizado do funcionario responsável pelo pedido: "))
         formadepgt = input("digite a forma de pagamento atualizada: ")
         datapedido = input("Digite a data atualizada que o pedido foi efetuado: ")
@@ -120,7 +139,7 @@ def editar_pedido():
         pedido_existe = cursor.fetchone()
         
         if pedido_existe:
-            cursor.execute("UPDATE \"Projeto\".pedido SET idCliente = %s,  idFuncionario = %s, formaPagamento = %s, valorTotal = %s, dataPedido = %s WHERE idPedido = %s",  (cliente, funcionario, formadepgt, valortotal, datapedido, idpedido))
+            cursor.execute("UPDATE \"Projeto\".pedido SET idCliente = %s,  idFuncionario = %s, formaPagamento = %s, dataPedido = %s WHERE idPedido = %s",  (cliente, funcionario, formadepgt, datapedido, idpedido))
             conexao.commit()
             print(f"Pedido {idpedido} alterado com sucesso.")
             return True
@@ -153,6 +172,35 @@ def excluir_pedido():
             return True
         else:
             print("Exclusão cancelada.")
+            return False
+        
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(f"Erro ao acessar o banco de dados: {error}")
+        return False 
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
+
+def econtrar_por_nome():
+    try:
+        conexao = criar_conexao()
+        cursor = conexao.cursor()
+        nomecliente = input("Digite o nome do cliente: ").strip()
+        if not nomecliente:
+            print("Nome do cliente não pode estar vazio.")
+            return False
+        cursor.execute("Select p.idpedido, p.idcliente, c.nomecliente, p.formapagamento, p.valortotal from \"Projeto\".pedido p join \"Projeto\".cliente c ON p.idcliente = c.idcliente where TRIM(LOWER(c.nomecliente)) ilike %s",(f"%{nomecliente}%",))
+        pedidos_cliente = cursor.fetchall()
+
+        if pedidos_cliente:
+            print("Pedidos encontrados:")
+            for pedido in pedidos_cliente:
+                print(f"ID Pedido: {pedido[0]}, Nome Cliente: {pedido[2]}, Forma de Pagamento: {pedido[3]}, Valor Total: {pedido[4]}")
+        else:
+            print("Nenhum pedido encontrado para o cliente especificado.")
             return False
         
     except (Exception, psycopg2.DatabaseError) as error:

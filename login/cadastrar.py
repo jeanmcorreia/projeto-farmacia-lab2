@@ -11,12 +11,12 @@ def cadastrar():
         Login = input("Digite o seu nome de usuário: ")
         Senha = input("Digite sua senha: ")
         Nome =  input("Digite o seu nome completo: ")
-        query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario where usuarioFuncionario = %s or SenhaFuncionario = %s"
-        cursor.execute(query,(Login, Senha))  
+        query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario where usuarioFuncionario = %s"
+        cursor.execute(query,(Login,))  
         usuario_existe = cursor.fetchone()
         
         if usuario_existe:
-            print("Falha no cadastro, usuario e/ou senha já existem.")
+            print("Falha no cadastro, usuario já existe.")
             return False  
         else:
             senha_hash = criptografar(Senha)

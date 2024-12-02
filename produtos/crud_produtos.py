@@ -109,6 +109,11 @@ def atualizar_produto():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idproduto, nomeproduto, preco, quantidade from \"Projeto\".produto")
+        lista_produtos = cursor.fetchall()
+        print("Produtos Registrados:")
+        for idproduto, nomeproduto, preco, quantidade in lista_produtos:
+            print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco} | Quantidade: {quantidade}")
         idProduto = int(input("Digite o id do produto: "))
         novo_nome = input("Digite o nome do atualizado produto: ")
         novo_preco = float(input("digite o valor atualizado do produto: "))

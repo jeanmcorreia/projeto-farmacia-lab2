@@ -54,6 +54,12 @@ def editar_cliente():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        
+        cursor.execute("Select idcliente, nomecliente, cpfcliente from \"Projeto\".cliente")
+        listacliente = cursor.fetchall()
+        print("Clientes Registrados:")
+        for idcliente, nomecliente, cpfcliente in listacliente:
+            print(f"ID: {idcliente} | Nome: {nomecliente} | CPF: {cpfcliente}")
         id = int(input("Digite o id do cliente: "))
         nome = input("Digite o nome atualizado do cliente: ")
         cpf = input("Digite o cpf atualizado do cliente: ")

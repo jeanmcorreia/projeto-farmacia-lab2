@@ -24,11 +24,11 @@ def editar_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("Select idproduto, nomeproduto, preco from \"Projeto\".produto")
+        cursor.execute("Select idproduto, nomeproduto, quantidade from \"Projeto\".produto")
         lista_produtos = cursor.fetchall()
 
-        for idproduto, nomeproduto, preco in lista_produtos:
-            print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco}")
+        for idproduto, nomeproduto, quantidade in lista_produtos:
+            print(f"ID: {idproduto} | Nome: {nomeproduto} | Quantidade: {quantidade}")
 
         idProduto = int(input("Digite o id do produto: "))
         cursor.execute('select * from \"Projeto\".produto where idproduto = %s', (idProduto,))

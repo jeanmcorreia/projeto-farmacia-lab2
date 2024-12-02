@@ -35,6 +35,11 @@ def relatorio_funcionarios():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario")
+        listaFunc = cursor.fetchall()
+        print("Funcionarios Registrados:")
+        for idfuncionario, nomefuncionario in listaFunc:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario ")
         relatorio_funcionario = cursor.fetchall()
         print("Funcionarios:")

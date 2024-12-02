@@ -1,5 +1,7 @@
 import psycopg2
 from config.db import criar_conexao
+from criptografar.cripto_senha import criptografar
+import bcrypt
 
 
 def cadastrar():
@@ -17,7 +19,8 @@ def cadastrar():
             print("Falha no cadastro, usuario e/ou senha já existem.")
             return False  
         else:
-            cursor.execute("INSERT INTO \"Projeto\".Funcionario (nomeFuncionario, usuarioFuncionario, SenhaFuncionario, NivelPermissao) VALUES (%s, %s, %s, %s)", (Nome, Login, Senha,'2'))
+            senha_hash = criptografar(Senha)
+            cursor.execute("INSERT INTO \"Projeto\".Funcionario (nomeFuncionario, usuarioFuncionario, SenhaFuncionario, NivelPermissao) VALUES (%s, %s, %s, %s)", (Nome, Login, senha_hash,'2'))
             print("Cadastro realizado com sucesso.")
             conexao.commit()
             return True

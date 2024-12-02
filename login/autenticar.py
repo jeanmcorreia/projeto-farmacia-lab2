@@ -1,5 +1,6 @@
 import psycopg2
 from config.db import criar_conexao
+import bcrypt
 
 login = None
 senha = None
@@ -16,13 +17,20 @@ def autenticar():
             
             conexao = criar_conexao()
             cursor = conexao.cursor()
-            query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario WHERE usuarioFuncionario = %s and SenhaFuncionario = %s"
-            cursor.execute(query, (login, senha))
+            query = "SELECT usuarioFuncionario, SenhaFuncionario FROM \"Projeto\".Funcionario WHERE usuarioFuncionario = %s"
+            cursor.execute(query, (login,))
             user_existe = cursor.fetchone()
 
             if user_existe:
-                autenticado = True 
-                return autenticado, login
+                
+                senha_hash = user_existe[1]  
+                
+                if isinstance(senha_hash, memoryview):
+                    senha_hash = bytes(senha_hash)
+                
+                if bcrypt.checkpw(senha.encode('utf-8'), senha_hash):  
+                    autenticado = True
+                    return autenticado, login
             else:
                 return False
         else:

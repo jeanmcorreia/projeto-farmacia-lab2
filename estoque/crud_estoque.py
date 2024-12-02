@@ -6,11 +6,11 @@ def relatorio_estoque():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
-        cursor.execute("Select idlote, validade from \"Projeto\".detalhe_estoque")
+        cursor.execute("Select nomeproduto, quantidade from \"Projeto\".produto")
         relatorio_lote = cursor.fetchall()
         print("Estoque:")
-        for idlote, validade in relatorio_lote:
-            print(f"ID: {idlote} | Nome: {validade}")
+        for nomeproduto, quantidade in relatorio_lote:
+            print(f"PRODUTO: {nomeproduto} | QUANTIDADE: {quantidade}")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
@@ -49,7 +49,9 @@ def editar_estoque():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
      

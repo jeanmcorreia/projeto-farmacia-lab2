@@ -26,7 +26,9 @@ def criar_cliente():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def relatorio_clientes():
@@ -44,9 +46,10 @@ def relatorio_clientes():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
-
 def editar_cliente():
     try:
         conexao = criar_conexao()
@@ -75,7 +78,9 @@ def editar_cliente():
         return False
         
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def excluir_cliente():
@@ -99,6 +104,8 @@ def excluir_cliente():
         return False 
 
     finally:
-        cursor.close()
-        conexao.close()
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
      

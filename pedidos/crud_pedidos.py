@@ -30,19 +30,30 @@ def gerar_pedido():
         if not Func_existe:
              print("Funcionário não encontrado. Operação cancelada.")
              return False
-        
-        formadepgt = input("digite a forma de pagamento: ")
+         
+        formadepgt = input("digite a forma de pagamento: ").upper()
+        formas_validas = {"PIX", "CREDITO", "DEBITO"}
+        if formadepgt not in formas_validas:
+            print(f'Forma de pagamento: "{formadepgt}", não existente')
+            return False
+            
         datapedido = input("Digite a data que o pedido esta sendo efetuado: ")
         cursor.execute("INSERT INTO \"Projeto\".pedido (idcliente, idfuncionario, formapagamento, datapedido) VALUES (%s, %s, %s, %s)", (cliente, funcionario, formadepgt, datapedido))
         cursor.execute("SELECT idPedido FROM \"Projeto\".pedido ORDER BY idPedido DESC LIMIT 1")
         idpedido = cursor.fetchone()[0]
-
+        
+        id_produto_adicionado = []
+        
         while True:
             cursor.execute("Select idproduto, nomeproduto, preco, quantidade from \"Projeto\".produto")
             lista_produtos = cursor.fetchall()
             for idproduto, nomeproduto, preco, quantidade in lista_produtos:
                 print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco} | Quantidade: {quantidade}")
             idproduto = int(input("Digite o ID do produto ou '0' para finalizar: "))
+            if idproduto in id_produto_adicionado:
+                print(f'produto de id:"{idproduto}", já foi adicionado a esse pedido')
+                continue
+            cursor.execute("Select idproduto from \"Projeto\".produto")
             if idproduto == 0:
                 break
             
@@ -58,10 +69,13 @@ def gerar_pedido():
                 if estoque and estoque[0] >= quantidade:
                     cursor.execute("INSERT INTO \"Projeto\".tbl_detalhe_pedidos (idpedido, idproduto, quantidade) VALUES (%s, %s, %s)", (idpedido, idproduto, quantidade))
                     cursor.execute("UPDATE \"Projeto\".produto SET quantidade = quantidade - %s WHERE idproduto = %s", (quantidade, idproduto))
+                    id_produto_adicionado.append(idproduto)
                 else:
                     print(f"Quantidade solicitada ({quantidade}) não disponível em estoque.")
+            else:
+                print("produto não existe.")
 
-        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(p.preco * dp.quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s)", (idpedido,))
+        cursor.execute("UPDATE \"Projeto\".pedido SET valortotal = (SELECT SUM(p.preco * dp.quantidade) FROM \"Projeto\".produto p, \"Projeto\".tbl_detalhe_pedidos dp WHERE dp.idproduto = p.idproduto AND dp.idpedido = %s) where idpedido = %s", (idpedido, idpedido))
         
         conexao.commit()
         print("Pedido gerado com sucesso e produtos adicionados!")
@@ -146,6 +160,8 @@ def excluir_pedido():
         return False 
 
     finally:
-        cursor.close()
-        conexao.close()
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
      

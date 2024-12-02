@@ -38,8 +38,10 @@ def criar_produto():
                 return False 
 
             finally:
-                cursor.close()
-                conexao.close()
+                if cursor:
+                    cursor.close()
+                if conexao:
+                    conexao.close()
         else:
             try:
                 criar = input("A categoria não existe, deseja adicioná-la? (S/N): ").upper()
@@ -68,16 +70,20 @@ def criar_produto():
                 return False 
 
             finally:
-                cursor.close()
-                conexao.close()
+                if cursor:
+                    cursor.close()
+                if conexao:
+                    conexao.close()
     
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
         return False 
 
     finally:
-            cursor.close()
-            conexao.close()
+            if cursor:
+                cursor.close()
+            if conexao:
+                conexao.close()
 
 def relatorio_produtos(): 
     try:
@@ -94,7 +100,9 @@ def relatorio_produtos():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def atualizar_produto():
@@ -116,7 +124,9 @@ def atualizar_produto():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def excluir_produto():
@@ -140,5 +150,7 @@ def excluir_produto():
         return False 
 
     finally:
-        cursor.close()
-        conexao.close()
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()

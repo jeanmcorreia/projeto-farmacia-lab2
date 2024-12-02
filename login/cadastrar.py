@@ -27,7 +27,9 @@ def cadastrar():
         
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
   
     

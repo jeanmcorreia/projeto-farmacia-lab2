@@ -54,11 +54,7 @@ def menu_opcoes():
                             print("Digite um número inteiro válido.")
                             continue
                         if opcao_cliente == 1:
-                            if validar_acesso() == '1':
-                                criar_cliente()
-                            else:
-                                print("você não tem permissõa para realizar essa ação")
-                                continue
+                            criar_cliente()
                         elif opcao_cliente == 2:   
                             relatorio_clientes()
                         elif opcao_cliente == 3:
@@ -70,30 +66,34 @@ def menu_opcoes():
                         else:
                             print("Escolha uma opção válida.")
                 elif opcao_pessoas == 2:
-                    while True:
-                        print("\nEscolha uma opção:")
-                        print("1 - Criar funcionário")
-                        print("2 - Relatório funcionário")
-                        print("3 - Editar funcionário")
-                        print("4 - Excluir funcionário")
-                        print("0 - Voltar")
-                        try:
-                            opcao_funcionario = int(input("Digite a opção desejada: "))
-                        except ValueError:
-                            print("Digite um número inteiro válido.")
-                            continue
-                        if opcao_funcionario == 1:                            
-                            criar_funcionario()
-                        elif opcao_funcionario == 2:
-                            relatorio_funcionarios()
-                        elif opcao_funcionario == 3:                            
-                            editar_funcionario()
-                        elif opcao_funcionario == 4:                           
-                            excluir_funcionario()
-                        elif opcao_funcionario == 0:
-                            break
-                        else:
-                            print("Escolha uma opção válida.")
+                    if validar_acesso() == '1':     
+                        while True:
+                            print("\nEscolha uma opção:")
+                            print("1 - Criar funcionário")
+                            print("2 - Relatório funcionário")
+                            print("3 - Editar funcionário")
+                            print("4 - Excluir funcionário")
+                            print("0 - Voltar")
+                            try:
+                                opcao_funcionario = int(input("Digite a opção desejada: "))
+                            except ValueError:
+                                print("Digite um número inteiro válido.")
+                                continue
+                            if opcao_funcionario == 1:                            
+                                criar_funcionario()
+                            elif opcao_funcionario == 2:
+                                relatorio_funcionarios()
+                            elif opcao_funcionario == 3:                            
+                                editar_funcionario()
+                            elif opcao_funcionario == 4:                           
+                                excluir_funcionario()
+                            elif opcao_funcionario == 0:
+                                break
+                            else:
+                                print("Escolha uma opção válida.")
+                    else:
+                        print("você não tem permissõa para realizar essa ação")
+                        continue
                 elif opcao_pessoas == 0:
                     break
                 else:

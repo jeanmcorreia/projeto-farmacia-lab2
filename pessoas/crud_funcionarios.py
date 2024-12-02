@@ -26,7 +26,9 @@ def criar_funcionario():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def relatorio_funcionarios():
@@ -44,7 +46,9 @@ def relatorio_funcionarios():
         return False 
 
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def editar_funcionario():
@@ -75,7 +79,9 @@ def editar_funcionario():
         return False
         
     finally:
+        if cursor:
             cursor.close()
+        if conexao:
             conexao.close()
 
 def excluir_funcionario():
@@ -99,6 +105,8 @@ def excluir_funcionario():
         return False 
 
     finally:
-        cursor.close()
-        conexao.close()
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
      

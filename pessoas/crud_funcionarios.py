@@ -1,4 +1,6 @@
 from config.db import criar_conexao
+from criptografar.cripto_senha import criptografar
+import bcrypt
 import psycopg2
 
 
@@ -12,6 +14,7 @@ def criar_funcionario():
         endereco = input("Digite o endereço do funcionario: ")
         celular = input("Digite o celular do funcionario: ")
         senha = input("Digite a senha do usuário:")
+        NivelPermissao = input("Digite o nivel de permissão: ")
         data_admissao = input("Digite a data que o funcionario está sendo cadastrado: ")
         cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
         funcionario_existe = cursor.fetchone()
@@ -19,7 +22,8 @@ def criar_funcionario():
             print(f"O Funcionario de cpf '{cpf}' já existe")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".funcionario(nomeFuncionario, usuario, cpfFuncionario, enderecoFuncionario, celularFuncionario, senha, admissao) values(%s, %s, %s, %s, %s, %s, %s)", (nome, usuario, cpf, endereco, celular, senha, data_admissao))
+            senha_hash = criptografar(senha)
+            cursor.execute("INSERT INTO \"Projeto\".funcionario(nomeFuncionario, UsuarioFuncionario, cpfFuncionario, enderecoFuncionario, celularFuncionario, SenhaFuncionario, NivelPermissao, admissao) values(%s, %s, %s, %s, %s, %s, %s, %s)", (nome, usuario, cpf, endereco, celular, senha_hash, NivelPermissao, data_admissao))
             conexao.commit()
             print(f"Funcionário criado com sucesso!")
             return True
@@ -74,6 +78,7 @@ def editar_funcionario():
         endereco = input("Digite o endereço atualizado do funcionario: ")
         celular = input("Digite o celular atualizado do funcionário: ")
         senha = input("Digite a senha atualizada do funcionario: ")
+        NivelPermissao = input("Digite o nivel de permissão atualizado do funcionario: ")
         data_admissao = input("Digite a data que o funcionario foi cadastrado atualizada: ")
         cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", (id,))
         func_existe = cursor.fetchone()
@@ -81,15 +86,22 @@ def editar_funcionario():
         if func_existe:
             cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
             funcionario_igual = cursor.fetchone()
-            if funcionario_igual():
+            if funcionario_igual:
                 print(f"O funcionario de cpf '{cpf}' já existe")
                 return False
             
             else:
-                cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, usuario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, senha = %s, admissao = %s WHERE idFuncionario = %s", (nome, usuario, cpf, endereco, celular, senha, data_admissao, id))
-                conexao.commit()
-                print(f"Funcionário com ID {id} atualizado com sucesso.")
-                return True
+                cursor.execute("Select UsuarioFuncionario from \"Projeto\".funcionario where UsuarioFuncionario = %s", (usuario,))
+                user_igual = cursor.fetchone()
+                if user_igual:
+                    print(f"Um funcionario já está usando o nome de user: '{usuario}'")
+                    return False
+                else:
+                    senha_update_hash = criptografar(senha)
+                    cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, UsuarioFuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, SenhaFuncionario = %s, NivelPermissao = %s, admissao = %s WHERE idFuncionario = %s", (nome, usuario, cpf, endereco, celular, senha_update_hash, NivelPermissao, data_admissao, id))
+                    conexao.commit()
+                    print(f"Funcionário com ID {id} atualizado com sucesso.")
+                    return True
             
         else:
             print("Falha na Alteração, Funcionario não existe")

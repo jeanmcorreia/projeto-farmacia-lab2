@@ -7,6 +7,8 @@ def criar_produto():
         cursor = conexao.cursor()
         nome = input("Digite o nome do produto: ")
         preco = input("digite o valor do produto: ")
+        tarja = input("Digite a tarja do Produto(caso possua): ")
+        quantidade = input("Digite a quantidade de produto em estoque: ")
         cursor.execute("select idcategoria, descricao from \"Projeto\".categoria")
         lista_categorias = cursor.fetchall()
         for idcategoria, descricao in lista_categorias:
@@ -17,10 +19,7 @@ def criar_produto():
         if not categoria_existe:
             print("Categoria não existe, operação cancelada.")
             return False
-        cursor.execute('SELECT * FROM \"Projeto\".categoria WHERE idcategoria = %s', (categoria,))
-        categoria_existente = cursor.fetchone()
-
-        if categoria_existente:
+        else:
             try:
                 cursor.execute('SELECT * FROM \"Projeto\".produto WHERE nomeproduto = %s', (nome,))
                 produto_existente = cursor.fetchone()
@@ -29,7 +28,7 @@ def criar_produto():
                     print(f"Produto {nome} já existe!")
                     return False
                 else:
-                    cursor.execute("INSERT INTO \"Projeto\".produto (nomeproduto, preco, idcategoria, tarja) VALUES (%s, %s, %s, %s)", (nome, preco, categoria, tarja))
+                    cursor.execute("INSERT INTO \"Projeto\".produto (nomeproduto, preco, idcategoria, tarja, quantidade) VALUES (%s, %s, %s, %s, %s)", (nome, preco, categoria, tarja, quantidade))
                     conexao.commit()
                     print(f"Produto {nome} criado com sucesso!")
                     return True
@@ -42,39 +41,7 @@ def criar_produto():
                     cursor.close()
                 if conexao:
                     conexao.close()
-        else:
-            try:
-                criar = input("A categoria não existe, deseja adicioná-la? (S/N): ").upper()
-                
-                if criar == "S":
-                    descricao = input("Digite o nome da categoria: ")
-                    obs = input("Digite exemplos de produtos que se enquadrem nessa categoria: ")
-                    cursor.execute("INSERT INTO \"Projeto\".categoria (descricao, obs) VALUES (%s, %s)", (descricao, obs))
-                    conexao.commit()
-                    cursor.execute("INSERT INTO \"Projeto\".produto (nomeproduto, preco, idcategoria, tarja) VALUES (%s, %s, %s, %s)", (nome, preco, categoria, tarja))
-                    conexao.commit()
-                    print(f"Categoria {descricao} criada com sucesso!")
-                    print(f"Produto {nome} criado com sucesso!")
-                    
-                    return True
-                
-                elif criar == "N":
-                    print("Programa Encerrado")
-                    return False
 
-                else:
-                    print("Opção inválida, tente novamente.")
-                    return False
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(f"Erro ao acessar o banco de dados: {error}")
-                return False 
-
-            finally:
-                if cursor:
-                    cursor.close()
-                if conexao:
-                    conexao.close()
-    
     except (Exception, psycopg2.DatabaseError) as error:
         print(f"Erro ao acessar o banco de dados: {error}")
         return False 

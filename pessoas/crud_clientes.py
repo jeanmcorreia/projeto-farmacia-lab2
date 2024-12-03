@@ -70,10 +70,16 @@ def editar_cliente():
         cliente_existe = cursor.fetchone()
         
         if cliente_existe:
-            cursor.execute("UPDATE \"Projeto\".cliente SET nomeCliente = %s, cpfcliente = %s, enderecocliente = %s, celularcliente = %s, dataCadastro = %s WHERE idCliente = %s", (nome, cpf, endereco, celular, dataCadastro, id))
-            conexao.commit()
-            print(f"Funcionário com ID {id} atualizado com sucesso.")
-            return True
+            cursor.execute("Select cpfcliente from \"Projeto\".cliente where cpfcliente = %s", (cpf,))
+            cliente_igual = cursor.fetchone()
+            if cliente_igual:
+                print(f"O cliente de cpf '{cpf}' já existe")
+                return False
+            else:
+                cursor.execute("UPDATE \"Projeto\".cliente SET nomeCliente = %s, cpfcliente = %s, enderecocliente = %s, celularcliente = %s, dataCadastro = %s WHERE idCliente = %s", (nome, cpf, endereco, celular, dataCadastro, id))
+                conexao.commit()
+                print(f"Funcionário com ID {id} atualizado com sucesso.")
+                return True
             
         else:
             print("Falha na alteração, cliente não existe")

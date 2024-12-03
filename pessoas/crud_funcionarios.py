@@ -7,9 +7,11 @@ def criar_funcionario():
         conexao = criar_conexao()
         cursor = conexao.cursor()
         nome = input("Digite o nome do funcionario: ")
+        usuario = input("Digite o usuário do funcionario: ")
         cpf = input("Digite o cpf do funcionario: ")
         endereco = input("Digite o endereço do funcionario: ")
         celular = input("Digite o celular do funcionario: ")
+        senha = input("Digite a senha do usuário:")
         data_admissao = input("Digite a data que o funcionario está sendo cadastrado: ")
         cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
         funcionario_existe = cursor.fetchone()
@@ -17,7 +19,7 @@ def criar_funcionario():
             print(f"O Funcionario de cpf '{cpf}' já existe")
             return False
         else:
-            cursor.execute("INSERT INTO \"Projeto\".funcionario(nomeFuncionario, cpfFuncionario, enderecoFuncionario, celularFuncionario, admissao) values(%s, %s, %s, %s, %s)", (nome, cpf, endereco, celular, data_admissao))
+            cursor.execute("INSERT INTO \"Projeto\".funcionario(nomeFuncionario, usuario, cpfFuncionario, enderecoFuncionario, celularFuncionario, senha, admissao) values(%s, %s, %s, %s, %s, %s, %s)", (nome, usuario, cpf, endereco, celular, senha, data_admissao))
             conexao.commit()
             print(f"Funcionário criado com sucesso!")
             return True
@@ -62,18 +64,27 @@ def editar_funcionario():
         cursor = conexao.cursor()
         id = int(input("Digite o id do funcionario: "))
         nome = input("Digite o nome atualizado do funcionario: ")
+        usuario = input("Digite o usuario atualizado do funcionario: ")
         cpf = input("Digite o cpf atualizado do funcionario: ")
         endereco = input("Digite o endereço atualizado do funcionario: ")
         celular = input("Digite o celular atualizado do funcionário: ")
+        senha = input("Digite a senha atualizada do funcionario: ")
         data_admissao = input("Digite a data que o funcionario foi cadastrado atualizada: ")
         cursor.execute("SELECT * FROM \"Projeto\".funcionario where idFuncionario = %s", (id,))
         func_existe = cursor.fetchone()
         
         if func_existe:
-            cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, admissao = %s WHERE idFuncionario = %s", (nome, cpf, endereco, celular, data_admissao, id))
-            conexao.commit()
-            print(f"Funcionário com ID {id} atualizado com sucesso.")
-            return True
+            cursor.execute("Select cpffuncionario from \"Projeto\".funcionario where cpffuncionario = %s", (cpf,))
+            funcionario_igual = cursor.fetchone()
+            if funcionario_igual():
+                print(f"O funcionario de cpf '{cpf}' já existe")
+                return False
+            
+            else:
+                cursor.execute("UPDATE \"Projeto\".funcionario SET nomefuncionario = %s, usuario = %s, cpffuncionario = %s, enderecofuncionario = %s, celularfuncionario = %s, senha = %s, admissao = %s WHERE idFuncionario = %s", (nome, usuario, cpf, endereco, celular, senha, data_admissao, id))
+                conexao.commit()
+                print(f"Funcionário com ID {id} atualizado com sucesso.")
+                return True
             
         else:
             print("Falha na Alteração, Funcionario não existe")

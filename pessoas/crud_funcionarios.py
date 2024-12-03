@@ -1,5 +1,7 @@
 from config.db import criar_conexao
 from criptografar.cripto_senha import criptografar
+from validação.validar_cpf import validar_cpf
+from validação.validar_numero import validar_numero
 import bcrypt
 import psycopg2
 
@@ -11,8 +13,18 @@ def criar_funcionario():
         nome = input("Digite o nome do funcionario: ")
         usuario = input("Digite o usuário do funcionario: ")
         cpf = input("Digite o cpf do funcionario: ")
+        if validar_cpf(cpf):
+           print("CPF válido. Continuando...")
+        else:
+            print(f'cpf não está na formatação correta, exemplo: "123456789-10"')
+            return False
         endereco = input("Digite o endereço do funcionario: ")
         celular = input("Digite o celular do funcionario: ")
+        if validar_numero(celular):
+           print("Numero válido. Continuando...")
+        else:
+            print(f'o número não está na formatação correta, exemplo: "ddd912345678"')
+            return False
         senha = input("Digite a senha do usuário:")
         NivelPermissao = input("Digite o nivel de permissão: ")
         data_admissao = input("Digite a data que o funcionario está sendo cadastrado: ")
@@ -75,8 +87,18 @@ def editar_funcionario():
         nome = input("Digite o nome atualizado do funcionario: ")
         usuario = input("Digite o usuario atualizado do funcionario: ")
         cpf = input("Digite o cpf atualizado do funcionario: ")
+        if validar_cpf(cpf):
+           print("CPF válido. Continuando...")
+        else:
+            print(f'cpf não está na formatação correta, exemplo: "123456789-10"')
+            return False
         endereco = input("Digite o endereço atualizado do funcionario: ")
         celular = input("Digite o celular atualizado do funcionário: ")
+        if validar_numero(celular):
+           print("Numero válido. Continuando...")
+        else:
+            print(f'o número não está na formatação correta, exemplo: "ddd912345678"')
+            return False
         senha = input("Digite a senha atualizada do funcionario: ")
         NivelPermissao = input("Digite o nivel de permissão atualizado do funcionario: ")
         data_admissao = input("Digite a data que o funcionario foi cadastrado atualizada: ")

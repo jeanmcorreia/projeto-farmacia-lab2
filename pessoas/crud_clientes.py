@@ -1,4 +1,6 @@
 from config.db import criar_conexao
+from validação.validar_cpf import validar_cpf
+from validação.validar_numero import validar_numero
 import psycopg2
 
 
@@ -8,8 +10,18 @@ def criar_cliente():
         cursor = conexao.cursor()
         nome = input("Digite o nome do cliente: ")
         cpf = input("Digite o cpf do cliente: ")
+        if validar_cpf(cpf):
+           print("CPF válido. Continuando...")
+        else:
+            print(f'cpf não está na formatação correta, exemplo: "123456789-10"')
+            return False
         endereco = input("Digite o endereço do cliente: ")
         celular = input("Digite o numero de celular do cliente: ")
+        if validar_numero(celular):
+           print("Numero válido. Continuando...")
+        else:
+            print(f'o número não está na formatação correta, exemplo: "ddd912345678"')
+            return False
         dataCadastro = input("Digite a data que o cliente está sendo cadastrado: ")
         cursor.execute("Select cpfcliente from \"Projeto\".cliente where cpfcliente = %s", (cpf,))
         cliente_existe = cursor.fetchone()
@@ -63,8 +75,18 @@ def editar_cliente():
         id = int(input("Digite o id do cliente: "))
         nome = input("Digite o nome atualizado do cliente: ")
         cpf = input("Digite o cpf atualizado do cliente: ")
+        if validar_cpf(cpf):
+           print("CPF válido. Continuando...")
+        else:
+            print(f'cpf não está na formatação correta, exemplo: "123456789-10"')
+            return False
         endereco = input("Digite o endereço atualizado do cliente: ")
         celular = input("Digite o numero de celular atualizado do cliente: ")
+        if validar_numero(celular):
+           print("Numero válido. Continuando...")
+        else:
+            print(f'o número não está na formatação correta, exemplo: "ddd912345678"')
+            return False
         dataCadastro = input("Digite a data que o cliente foi cadastrado atualizada: ")
         cursor.execute("SELECT * FROM \"Projeto\".cliente where idCliente = %s", (id,))
         cliente_existe = cursor.fetchone()

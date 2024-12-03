@@ -62,6 +62,11 @@ def editar_funcionario():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario")
+        listaFunc = cursor.fetchall()
+        print("Funcionarios Registrados:")
+        for idfuncionario, nomefuncionario in listaFunc:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         id = int(input("Digite o id do funcionario: "))
         nome = input("Digite o nome atualizado do funcionario: ")
         usuario = input("Digite o usuario atualizado do funcionario: ")
@@ -104,6 +109,11 @@ def excluir_funcionario():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idfuncionario, nomefuncionario from \"Projeto\".funcionario")
+        listaFunc = cursor.fetchall()
+        print("Funcionarios Registrados:")
+        for idfuncionario, nomefuncionario in listaFunc:
+            print(f"ID: {idfuncionario} | Nome: {nomefuncionario}")
         idfuncionario = int(input("Digite o id do funcionario: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o funcionario {idfuncionario}? (Isso o excluirá permanentemente!)\nS/N").upper()
 

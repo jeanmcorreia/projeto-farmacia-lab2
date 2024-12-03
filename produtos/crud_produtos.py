@@ -105,6 +105,12 @@ def excluir_produto():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idproduto, nomeproduto, preco, quantidade from \"Projeto\".produto")
+        lista_produtos = cursor.fetchall()
+        print("Produtos Registrados:")
+        for idproduto, nomeproduto, preco, quantidade in lista_produtos:
+            print(f"ID: {idproduto} | Nome: {nomeproduto} | Preço: {preco} | Quantidade: {quantidade}")
+        idProduto = int(input("Digite o id do produto: "))
         idProduto = int(input("Digite o id do produto: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o produto {idProduto}? (Isso excluirá o produto permanentemente!)\nS/N").upper()
 

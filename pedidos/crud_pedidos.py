@@ -161,6 +161,11 @@ def excluir_pedido():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select p.idpedido, p.idcliente, c.nomecliente from \"Projeto\".pedido p inner join \"Projeto\".cliente c ON p.idcliente = c.idcliente")
+        lista_pedido = cursor.fetchall()
+        print("Pedidos Registrados:")
+        for idpedido, idcliente, nomecliente in lista_pedido:
+            print(f"ID: {idpedido} | CLIENTE: {idcliente} - {nomecliente}")
         idpedido = int(input("Digite o id do pedido: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o pedido {idpedido}? (Isso o excluirá permanentemente!)\nS/N").upper()
 

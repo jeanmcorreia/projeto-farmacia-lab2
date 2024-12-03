@@ -99,6 +99,11 @@ def excluir_cliente():
     try:
         conexao = criar_conexao()
         cursor = conexao.cursor()
+        cursor.execute("Select idcliente, nomecliente, cpfcliente from \"Projeto\".cliente")
+        listacliente = cursor.fetchall()
+        print("Clientes Registrados:")
+        for idcliente, nomecliente, cpfcliente in listacliente:
+            print(f"ID: {idcliente} | Nome: {nomecliente} | CPF: {cpfcliente}")
         idcliente = int(input("Digite o id do cliente que deseja excluir: "))
         confirmar_exclusao = input(f"Você tem certeza que quer excluir o cliente {idcliente}? (Isso o excluirá permanentemente!)\nS/N").upper()
 

@@ -3,7 +3,7 @@ from login.autenticar import autenticar
 from login.cadastrar import cadastrar
 from pessoas.crud_clientes import criar_cliente, relatorio_clientes, editar_cliente, excluir_cliente
 from pessoas.crud_funcionarios import criar_funcionario, relatorio_funcionarios, editar_funcionario, excluir_funcionario
-from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto
+from produtos.crud_produtos import criar_produto, relatorio_produtos, atualizar_produto, excluir_produto, criar_categoria
 from estoque.crud_estoque import relatorio_estoque, editar_estoque
 from pedidos.crud_pedidos import gerar_pedido, relatorio_pedidos, editar_pedido, excluir_pedido, econtrar_por_nome
 from validação.validar_acesso import validar_acesso
@@ -125,6 +125,7 @@ def menu_opcoes():
                 print("2 - Relatório produto")
                 print("3 - Editar produto")
                 print("4 - Excluir produto")
+                print("5 - criar categoria")
                 print("0 - Voltar")
                 try:
                     opcao_produto = int(input("Digite a opção desejada: "))
@@ -139,6 +140,8 @@ def menu_opcoes():
                     atualizar_produto()
                 elif opcao_produto == 4:                   
                     excluir_produto()
+                elif opcao_produto == 5:                   
+                    criar_categoria()
                 elif opcao_produto == 0:
                     break
                 else:

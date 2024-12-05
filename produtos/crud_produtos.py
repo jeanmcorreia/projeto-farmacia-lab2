@@ -132,3 +132,30 @@ def excluir_produto():
             cursor.close()
         if conexao:
             conexao.close()
+
+def criar_categoria():
+    try:
+        conexao = criar_conexao()
+        cursor  = conexao.cursor()
+        categoria = input("Insira o nome da categoria: ")
+        obs = input("Digite especifiações dessa categoria: ")
+        query = "Select * from \"Projeto\".categoria where Descricao ilike %s"
+        cursor.execute(query,(categoria,))
+        categoria_existe = cursor.fetchone()
+        if categoria_existe:
+            print(f"Categoria de nome {categoria}, já existe")
+            return False
+        else:
+            query = "Insert into \"Projeto\".categoria(descricao, obs) values(%s, %s)"
+            cursor.execute(query,(categoria, obs))
+            conexao.commit()
+            print(f"Categoria: {categoria}, criado com sucesso!")
+            return True
+    except Exception as error:
+        print(f"Erro no banco de dados {error}")
+    finally:
+        if cursor: 
+            cursor.close()
+        if conexao:
+            conexao.close()
+    
